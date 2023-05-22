@@ -5,11 +5,12 @@ import { MainPage } from "./pages/MainPage";
 import { RegisterPage } from "./pages/RegisterPage";
 import { Paths } from "./utils/paths";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Main from "./components/Main/Main";
 
 const router = createBrowserRouter([
   {
     path: Paths.main,
-    element: <MainPage />,
+    element: <Main />,
   },
   {
     path: Paths.login,

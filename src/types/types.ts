@@ -18,12 +18,12 @@ export type ErrorWithMessage = {
 };
 
 export type MainPageProps = {
-  user?: User;
+  user?: (User & { token: string }) | null;
 };
 
 export interface LayoutProps {
   children: ReactNode;
-  user?: User;
+  user?: (User & { token: string }) | null;
 }
 
 export interface UserAuth {

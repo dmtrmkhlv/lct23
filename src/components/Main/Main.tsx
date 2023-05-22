@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import { selectUser } from "../../features/auth/authSlice";
 import { useSelector } from "react-redux";
 import { Role } from "../../types/types";
-import Admin from "../Admin/Admin";
-import Curator from "../Curator/Curator";
-import Intern from "../Intern/Intern";
-import Mentor from "../Mentor/Mentor";
-import Hr from "../Hr/Hr";
+import { AdminPage } from "../../pages/AdminPage";
+import { CuratorPage } from "../../pages/CuratorPage";
+import { InternPage } from "../../pages/InternPage";
+import { MentorPage } from "../../pages/MentorPage";
+import { HrPage } from "../../pages/HrPage";
 
 const Main: React.FC = () => {
   const [role, setRole] = useState<Role | undefined>("norequired");
@@ -20,15 +20,15 @@ const Main: React.FC = () => {
 
   switch (role) {
     case "admin":
-      return <Admin />;
+      return <AdminPage user={user} />;
     case "curator":
-      return <Curator />;
+      return <CuratorPage user={user} />;
     case "intern":
-      return <Intern />;
+      return <InternPage user={user} />;
     case "mentor":
-      return <Mentor />;
+      return <MentorPage user={user} />;
     case "hr":
-      return <Hr />;
+      return <HrPage user={user} />;
     default:
       return (
         <>
