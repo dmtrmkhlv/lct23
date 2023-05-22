@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { selectUser } from "../../features/auth/authSlice";
 import { useSelector } from "react-redux";
 import { Role } from "../../types/types";
@@ -8,15 +8,19 @@ import { CuratorPage } from "../../pages/CuratorPage";
 import { InternPage } from "../../pages/InternPage";
 import { MentorPage } from "../../pages/MentorPage";
 import { HrPage } from "../../pages/HrPage";
+import { Paths } from "../../utils/paths";
 
 const Main: React.FC = () => {
+  const navigate = useNavigate();
   const [role, setRole] = useState<Role | undefined>("norequired");
   const user = useSelector(selectUser);
   useEffect(() => {
     if (user) {
       setRole(user.role);
+    } else {
+      navigate(Paths.login);
     }
-  }, [user]);
+  }, [user, navigate]);
 
   switch (role) {
     case "admin":
@@ -30,15 +34,7 @@ const Main: React.FC = () => {
     case "hr":
       return <HrPage user={user} />;
     default:
-      return (
-        <>
-          <section className="features">
-            <div className="container">
-              <h2>norequired</h2>
-            </div>
-          </section>
-        </>
-      );
+      return <Link to={Paths.login} />;
   }
 };
 

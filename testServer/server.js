@@ -102,12 +102,16 @@ app.post("/api/user/login", (req, res) => {
   // });
 });
 
-app.get("/api/user/current", (req, res) => {
+app.post("/api/user/current", (req, res) => {
   res.status(200).json(req.user);
 });
 
 app.get("/", (req, res) => {
   res.send("Ответ сервера");
+});
+
+app.get("/api/users", (req, res) => {
+  res.status(200).json(fakeDB);
 });
 
 app.listen(port, () => {
