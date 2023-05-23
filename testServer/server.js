@@ -2,6 +2,7 @@ import { nanoid } from "nanoid";
 import express from "express";
 import jwt from "jsonwebtoken";
 import cors from "cors";
+import { fakerRU as faker } from "@faker-js/faker";
 
 const app = express();
 const port = 8000;
@@ -13,69 +14,89 @@ let refreshTokens = [];
 app.use(cors());
 app.use(express.json());
 
-const fakeDB = [
+export function createRandomUser() {
+  const roles = ["curator", "admin", "intern", "mentor", "hr"];
+  const randomRole = roles[Math.floor(Math.random() * roles.length)];
+  return {
+    id: nanoid(),
+    email: faker.internet.email(),
+    password: "123123",
+    role: randomRole,
+    firstName: faker.person.lastName(),
+    lastName: faker.person.lastName(),
+    username: faker.internet.userName(),
+    phone: faker.phone.number(),
+  };
+}
+
+export const USERS = faker.helpers.multiple(createRandomUser, {
+  count: 50,
+});
+
+const fakeDBStart = [
   {
     id: nanoid(),
     email: "admin@mail.ru",
     password: "123123",
     role: "admin",
-    firstName: "admin",
-    lastName: "admin",
-    username: "admin",
-    phone: 89009009090,
+    firstName: faker.person.lastName(),
+    lastName: faker.person.lastName(),
+    username: faker.internet.userName(),
+    phone: faker.phone.number(),
   },
   {
     id: nanoid(),
     email: "curator@mail.ru",
     password: "123123",
     role: "curator",
-    firstName: "curator",
-    lastName: "curator",
-    username: "curator",
-    phone: 89009009090,
+    firstName: faker.person.firstName(),
+    lastName: faker.person.lastName(),
+    username: faker.internet.userName(),
+    phone: faker.phone.number(),
   },
   {
     id: nanoid(),
     email: "intern@mail.ru",
     password: "123123",
     role: "intern",
-    firstName: "intern",
-    lastName: "intern",
-    username: "intern",
-    phone: 89009009090,
+    firstName: faker.person.lastName(),
+    lastName: faker.person.lastName(),
+    username: faker.internet.userName(),
+    phone: faker.phone.number(),
   },
   {
     id: nanoid(),
     email: "mentor@mail.ru",
     password: "123123",
     role: "mentor",
-    firstName: "mentor",
-    lastName: "mentor",
-    username: "mentor",
-    phone: 89009009090,
+    firstName: faker.person.lastName(),
+    lastName: faker.person.lastName(),
+    username: faker.internet.userName(),
+    phone: faker.phone.number(),
   },
   {
     id: nanoid(),
     email: "hr@mail.ru",
     password: "123123",
     role: "hr",
-    firstName: "hr",
-    lastName: "hr",
-    username: "hr",
-    phone: 89009009090,
+    firstName: faker.person.lastName(),
+    lastName: faker.person.lastName(),
+    username: faker.internet.userName(),
+    phone: faker.phone.number(),
   },
   {
     id: nanoid(),
     email: "intern2@mail.ru",
     password: "123123",
-    role: "intern2",
-    firstName: "intern2",
-    lastName: "intern2",
-    username: "intern2",
-    phone: 89009009090,
+    role: "intern",
+    firstName: faker.person.lastName(),
+    lastName: faker.person.lastName(),
+    username: faker.internet.userName(),
+    phone: faker.phone.number(),
   },
 ];
-
+const fakeDB = [...fakeDBStart, ...USERS];
+// console.log([...fakeDB, ...USERS]);
 const authenticateJWT = (req, res, next) => {
   const authHeader = req.headers.authorization;
 

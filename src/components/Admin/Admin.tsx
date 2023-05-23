@@ -6,10 +6,11 @@ import type { FilterConfirmProps } from "antd/es/table/interface";
 import React, { useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useGetAllUsersQuery } from "../../features/api/usersAPI";
 import { selectUser } from "../../features/auth/authSlice";
-import { User } from "../../types/types";
+import { Role, User } from "../../types/types";
+import { Paths } from "../../utils/paths";
 
 type DataIndex = keyof User;
 
@@ -101,7 +102,7 @@ const Admin: React.FC = () => {
       </div>
     ),
     filterIcon: (filtered: boolean) => (
-      <SearchOutlined style={{ color: filtered ? "#1677ff" : undefined }} />
+      <SearchOutlined style={{ color: filtered ? "#542d80" : undefined }} />
     ),
     onFilter: (value, record) =>
       record[dataIndex]
@@ -126,13 +127,30 @@ const Admin: React.FC = () => {
       ),
   });
 
+  const changeRoleLang = (role: Role) => {
+    switch (role) {
+      case "curator":
+        return "Куратор";
+      case "intern":
+        return "Стажер";
+      case "mentor":
+        return "Наставник";
+      case "hr":
+        return "Кадры";
+      case "admin":
+        return "Администратор";
+    }
+  };
+
   const columns: ColumnsType<User> = [
     {
-      title: "Name",
+      title: "Имя",
       dataIndex: "firstName",
       key: "firstName",
       width: "30%",
       ...getColumnSearchProps("firstName"),
+      sorter: (a, b) => a.firstName.localeCompare(b.firstName),
+      sortDirections: ["descend", "ascend"],
     },
     {
       title: "Фамилия",
@@ -140,14 +158,36 @@ const Admin: React.FC = () => {
       key: "lastName",
       width: "20%",
       ...getColumnSearchProps("lastName"),
+      sorter: (a, b) => a.lastName.localeCompare(b.lastName),
+      sortDirections: ["descend", "ascend"],
     },
     {
       title: "Роль",
-      dataIndex: "role",
+      dataIndex: "",
       key: "role",
-      ...getColumnSearchProps("role"),
-      sorter: (a, b) => a.role.length - b.role.length,
-      sortDirections: ["descend", "ascend"],
+      filters: [
+        { text: "Куратор", value: "curator" },
+        { text: "Администратор", value: "admin" },
+        { text: "Стажер", value: "intern" },
+        { text: "Наставник", value: "mentor" },
+        { text: "Кадры", value: "hr" },
+      ],
+      filterMode: "tree",
+      filterSearch: true,
+      onFilter: (value: any, record) => record.role.includes(value),
+      width: "30%",
+      render: (record) =>
+        // <Link to={`${Paths.user}/${record.role}`}>
+        changeRoleLang(record.role),
+        // </Link>
+    },
+    {
+      title: "Правка",
+      dataIndex: "",
+      key: "edit",
+      render: (record) => (
+        <Link to={`${Paths.user}/${record.id}`}>Редактировать</Link>
+      ),
     },
   ];
 
