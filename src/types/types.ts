@@ -36,10 +36,10 @@ export interface User {
   email: string;
   password: string;
   role: Role;
-  firstName?: string;
-  lastName?: string;
-  username?: string;
-  phone?: number;
+  firstName: string | "";
+  lastName: string | "";
+  username: string | "";
+  phone: number | "";
 }
 
 export interface AuthResponse {

@@ -1,126 +1,164 @@
-import { useEffect, useState } from "react";
-import { Button, Space, Table } from "antd";
-import type { ColumnsType, TableProps } from "antd/es/table";
-import { PlusCircleOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
-import { selectUser } from "../../features/auth/authSlice";
+import { SearchOutlined } from "@ant-design/icons";
+import type { InputRef } from "antd";
+import { Button, Input, Space, Table } from "antd";
+import type { ColumnType, ColumnsType } from "antd/es/table";
+import type { FilterConfirmProps } from "antd/es/table/interface";
+import React, { useRef, useState } from "react";
+import Highlighter from "react-highlight-words";
 import { useSelector } from "react-redux";
-import { User } from "../../types/types";
+import { useNavigate } from "react-router-dom";
 import { useGetAllUsersQuery } from "../../features/api/usersAPI";
-import { Paths } from "../../utils/paths";
-import { CustomButton } from "../CustomButton/CustomButton";
-import { FilterValue, SorterResult } from "antd/es/table/interface";
+import { selectUser } from "../../features/auth/authSlice";
+import { User } from "../../types/types";
 
-export default function Admin() {
+type DataIndex = keyof User;
+
+const Admin: React.FC = () => {
   const navigate = useNavigate();
   const user = useSelector(selectUser);
   const { data, isLoading } = useGetAllUsersQuery();
 
-  const [filteredInfo, setFilteredInfo] = useState<
-    Record<string, FilterValue | null>
-  >({});
-  const [sortedInfo, setSortedInfo] = useState<SorterResult<User>>({});
+  const [searchText, setSearchText] = useState("");
+  const [searchedColumn, setSearchedColumn] = useState("");
+  const searchInput = useRef<InputRef>(null);
 
-  const handleChange: TableProps<User>["onChange"] = (
-    pagination,
-    filters,
-    sorter
+  const handleSearch = (
+    selectedKeys: string[],
+    confirm: (param?: FilterConfirmProps) => void,
+    dataIndex: DataIndex
   ) => {
-    setFilteredInfo(filters);
-    setSortedInfo(sorter as SorterResult<User>);
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
   };
 
-  const clearFilters = () => {
-    setFilteredInfo({});
+  const handleReset = (clearFilters: () => void) => {
+    clearFilters();
+    setSearchText("");
   };
 
-  const clearAll = () => {
-    setFilteredInfo({});
-    setSortedInfo({});
-  };
-
-  const setAgeSort = () => {
-    setSortedInfo({
-      order: "descend",
-      columnKey: "age",
-    });
-  };
+  const getColumnSearchProps = (dataIndex: DataIndex): ColumnType<User> => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+      close,
+    }) => (
+      <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
+        <Input
+          ref={searchInput}
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onPressEnter={() =>
+            handleSearch(selectedKeys as string[], confirm, dataIndex)
+          }
+          style={{ marginBottom: 8, display: "block" }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() =>
+              handleSearch(selectedKeys as string[], confirm, dataIndex)
+            }
+            icon={<SearchOutlined />}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => clearFilters && handleReset(clearFilters)}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Reset
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              confirm({ closeDropdown: false });
+              setSearchText((selectedKeys as string[])[0]);
+              setSearchedColumn(dataIndex);
+            }}
+          >
+            Filter
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              close();
+            }}
+          >
+            close
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered: boolean) => (
+      <SearchOutlined style={{ color: filtered ? "#1677ff" : undefined }} />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex]
+        .toString()
+        .toLowerCase()
+        .includes((value as string).toLowerCase()),
+    onFilterDropdownOpenChange: (visible) => {
+      if (visible) {
+        setTimeout(() => searchInput.current?.select(), 100);
+      }
+    },
+    render: (text) =>
+      searchedColumn === dataIndex ? (
+        <Highlighter
+          highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+          searchWords={[searchText]}
+          autoEscape
+          textToHighlight={text ? text.toString() : ""}
+        />
+      ) : (
+        text
+      ),
+  });
 
   const columns: ColumnsType<User> = [
     {
-      title: "Имя",
+      title: "Name",
       dataIndex: "firstName",
       key: "firstName",
-      sorter: (a: any, b: any) => a.firstName.localeCompare(b.firstName),
-      sortDirections: ["descend", "ascend"],
+      width: "30%",
+      ...getColumnSearchProps("firstName"),
     },
     {
       title: "Фамилия",
       dataIndex: "lastName",
       key: "lastName",
-      sorter: (a: any, b: any) => a.lastName.localeCompare(b.lastName),
-      sortDirections: ["descend", "ascend"],
+      width: "20%",
+      ...getColumnSearchProps("lastName"),
     },
     {
       title: "Роль",
       dataIndex: "role",
       key: "role",
-      filters: [
-        { text: "admin", value: "admin" },
-        { text: "mentor", value: "mentor" },
-      ],
-      filteredValue: filteredInfo.role || null,
-      onFilter: (value: any, record) => record.role.includes(value),
-      sorter: (a: any, b: any) => a.role.length - b.role.length,
-      sortOrder: sortedInfo.columnKey === "role" ? sortedInfo.order : null,
-      ellipsis: true,
-    },
-    {
-      title: "Почта",
-      dataIndex: "email",
-      key: "email",
-    },
-    {
-      title: "Телефон",
-      dataIndex: "phone",
-      key: "phone",
+      ...getColumnSearchProps("role"),
+      sorter: (a, b) => a.role.length - b.role.length,
+      sortDirections: ["descend", "ascend"],
     },
   ];
 
-  useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
-  }, [user, navigate]);
-
-  const gotToAddUser = () => navigate(Paths.userAdd);
-
   return (
-    <>
-      <CustomButton
-        type="primary"
-        onClick={gotToAddUser}
-        icon={<PlusCircleOutlined />}
-      >
-        Добавить
-      </CustomButton>
-      <Space style={{ marginBottom: 16 }}>
-        <Button onClick={clearFilters}>Clear filters</Button>
-        <Button onClick={clearAll}>Clear filters and sorters</Button>
-      </Space>
-      <Table
-        loading={isLoading}
-        rowKey={(user) => user.id}
-        columns={columns}
-        dataSource={data}
-        pagination={false}
-        onChange={handleChange}
-        onRow={(user) => {
-          return {
-            onClick: () => navigate(`${Paths.user}/${user.id}`),
-          };
-        }}
-      />
-    </>
+    <Table
+      columns={columns}
+      dataSource={data}
+      loading={isLoading}
+      rowKey={(user) => user.id}
+    />
   );
-}
+};
+
+export default Admin;

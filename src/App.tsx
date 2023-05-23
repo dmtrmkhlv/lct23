@@ -6,6 +6,8 @@ import { RegisterPage } from "./pages/RegisterPage";
 import { Paths } from "./utils/paths";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Main from "./components/Main/Main";
+import { ConfigProvider, theme } from "antd";
+import ru_RU from "antd/locale/ru_RU";
 
 const router = createBrowserRouter([
   {
@@ -24,9 +26,16 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <Auth>
-      <RouterProvider router={router} />
-    </Auth>
+    <ConfigProvider
+      theme={{
+        algorithm: theme.compactAlgorithm,
+      }}
+      locale={ru_RU}
+    >
+      <Auth>
+        <RouterProvider router={router} />
+      </Auth>
+    </ConfigProvider>
   );
 }
 
