@@ -35,11 +35,11 @@ export const USERS = faker.helpers.multiple(createRandomUser, {
 
 const fakeDBStart = [
   {
-    id: nanoid(),
+    id: "b0IlYDTHYbLoHk1FGb33v",
     email: "admin@mail.ru",
     password: "123123",
     role: "admin",
-    firstName: faker.person.lastName(),
+    firstName: "Admin",
     lastName: faker.person.lastName(),
     username: faker.internet.userName(),
     phone: faker.phone.number(),
@@ -127,7 +127,7 @@ app.post("/api/user/login", (req, res) => {
     const accessToken = jwt.sign(
       { email: userLogin.email, role: userLogin.role },
       accessTokenSecret,
-      { expiresIn: "1h" }
+      { expiresIn: "10h" }
     );
 
     const refreshToken = jwt.sign(
@@ -145,18 +145,19 @@ app.post("/api/user/login", (req, res) => {
     res.status(400);
     res.send("User not found");
   }
+});
 
-  // res.status(200).json({
-  //   id: "string",
-  //   email: req.body.email,
-  //   password: req.body.password,
-  //   role: "admin",
-  //   firstName: "string",
-  //   lastName: "string",
-  //   username: "string",
-  //   phone: 89009009090,
-  //   token: token,
-  // });
+app.get("/api/users/:id", (req, res) => {
+  const userLogin = fakeDB.find((user) => {
+    return user.id === req.params.id;
+  });
+
+  if (userLogin) {
+    res.status(200).json(userLogin);
+  } else {
+    res.status(400);
+    res.send("User not found");
+  }
 });
 
 app.get("/api/user/current", (req, res) => {
