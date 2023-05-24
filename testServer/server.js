@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 export function createRandomUser() {
-  const roles = ["curator", "admin", "intern", "mentor", "hr"];
+  const roles = ["curator", "admin", "intern", "mentor", "hr", "candidat"];
   const randomRole = roles[Math.floor(Math.random() * roles.length)];
   return {
     id: nanoid(),

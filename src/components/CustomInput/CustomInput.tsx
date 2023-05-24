@@ -1,28 +1,58 @@
 import React from "react";
-import { Form, Input } from "antd";
+import { Form, Input, Select, Space } from "antd";
 
 type Props = {
   name: string;
   placeholder: string;
   type?: string;
+  defaultValue?: string;
+  selectOptions?: {
+    value: string;
+    label: string;
+  }[];
+  disabled?: boolean;
 };
 
 export const CustomInput = ({
-  type = 'text',
+  type = "text",
   name,
   placeholder,
+  selectOptions,
+  defaultValue,
+  disabled = false,
 }: Props) => {
-  return (
-    <Form.Item
-      name={name}
-      rules={[{ required: true, message: "Обязательное поле" }]}
-      shouldUpdate={ true }
-    >
-      <Input
-        placeholder={placeholder}
-        type={ type }
-        size="large"
-      />
-    </Form.Item>
-  );
+  switch (type) {
+    case "text":
+      return (
+        <Form.Item
+          name={name}
+          rules={[{ required: true, message: "Обязательное поле" }]}
+          shouldUpdate={true}
+        >
+          <Input
+            disabled={disabled}
+            placeholder={placeholder}
+            type={type}
+            size="large"
+          />
+        </Form.Item>
+      );
+
+    case "select":
+      return (
+        <Form.Item
+          name={name}
+          rules={[{ required: true, message: "Обязательное поле" }]}
+          shouldUpdate={true}
+        >
+          <Select
+            defaultValue={defaultValue}
+            options={selectOptions}
+            size="large"
+          />
+        </Form.Item>
+      );
+    default:
+      return <></>;
+  }
 };

@@ -13,6 +13,7 @@ import { isErrorWithMessage } from "../../utils/is-error-with-message";
 import { Paths } from "../../utils/paths";
 import { CustomButton } from "../CustomButton/CustomButton";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
+import { changeRoleLang } from "../../utils/changeRoleLang";
 
 export const User = () => {
   const navigate = useNavigate();
@@ -70,12 +71,11 @@ export const User = () => {
           span={3}
         >{`${data.lastName}`}</Descriptions.Item>
 
-        <Descriptions.Item
-          label="Роль"
-          span={3}
-        >{`${data.role}`}</Descriptions.Item>
+        <Descriptions.Item label="Роль" span={3}>{`${changeRoleLang(
+          data.role
+        )}`}</Descriptions.Item>
       </Descriptions>
-      {user?.id === data.id && (
+      {(user?.id === data.id || user?.role === "admin") && (
         <>
           <Divider orientation="left">Действия</Divider>
           <Space>

@@ -22,7 +22,18 @@ export const UserEdit = () => {
     return <span>Загрузка</span>;
   }
 
+  const usersCompare = (userInit: any, user: any): boolean => {
+    return JSON.stringify(userInit) === JSON.stringify(user);
+  };
+
   const handleEditUser = async (user: User) => {
+    console.log(
+      usersCompare(data, {
+        ...data,
+        ...user,
+      })
+    );
+
     try {
       const editedUser = {
         ...data,
@@ -42,8 +53,6 @@ export const UserEdit = () => {
       }
     }
   };
-
-  // console.log(editUser, data);
 
   return (
     <Layout>

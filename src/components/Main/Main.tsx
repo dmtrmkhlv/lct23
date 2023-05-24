@@ -12,7 +12,7 @@ import { Paths } from "../../utils/paths";
 
 const Main: React.FC = () => {
   const navigate = useNavigate();
-  const [role, setRole] = useState<Role | undefined>("norequired");
+  const [role, setRole] = useState<Role | undefined>("candidat");
   const user = useSelector(selectUser);
   useEffect(() => {
     if (user) {
@@ -33,6 +33,8 @@ const Main: React.FC = () => {
       return <MentorPage user={user} />;
     case "hr":
       return <HrPage user={user} />;
+    case "candidat":
+      return <>candidat</>;
     default:
       return <Link to={Paths.login} />;
   }

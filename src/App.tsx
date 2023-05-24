@@ -12,6 +12,10 @@ import { User } from "./components/User/User";
 import { UserEdit } from "./components/UserEdit/UserEdit";
 import { Status } from "./components/Status/Status";
 
+const { useToken } = theme;
+
+console.log(theme);
+
 const router = createBrowserRouter([
   {
     path: Paths.main,
@@ -48,6 +52,9 @@ function App() {
     <ConfigProvider
       theme={{
         algorithm: theme.compactAlgorithm,
+        token: {
+          colorPrimary: "#038d77",
+        },
       }}
       locale={ru_RU}
     >

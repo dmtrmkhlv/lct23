@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 export type Require = "protected" | "public" | undefined;
 
 export type Role =
-  | "norequired"
+  | "candidat"
   | "curator"
   | "admin"
   | "intern"

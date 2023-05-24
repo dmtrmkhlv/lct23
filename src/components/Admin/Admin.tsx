@@ -11,6 +11,7 @@ import { useGetAllUsersQuery } from "../../features/api/usersAPI";
 import { selectUser } from "../../features/auth/authSlice";
 import { Role, User } from "../../types/types";
 import { Paths } from "../../utils/paths";
+import { changeRoleLang } from "../../utils/changeRoleLang";
 
 type DataIndex = keyof User;
 
@@ -127,21 +128,6 @@ const Admin: React.FC = () => {
       ),
   });
 
-  const changeRoleLang = (role: Role) => {
-    switch (role) {
-      case "curator":
-        return "Куратор";
-      case "intern":
-        return "Стажер";
-      case "mentor":
-        return "Наставник";
-      case "hr":
-        return "Кадры";
-      case "admin":
-        return "Администратор";
-    }
-  };
-
   const columns: ColumnsType<User> = [
     {
       title: "Имя",
@@ -179,7 +165,7 @@ const Admin: React.FC = () => {
       render: (record) =>
         // <Link to={`${Paths.user}/${record.role}`}>
         changeRoleLang(record.role),
-        // </Link>
+      // </Link>
     },
     {
       title: "Правка",
