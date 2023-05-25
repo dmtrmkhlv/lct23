@@ -13,6 +13,7 @@ import { isErrorWithMessage } from "../../utils/is-error-with-message";
 import { objCompare } from "../../utils/objCompare";
 import { Paths } from "../../utils/paths";
 import { UserForm } from "../UserForm/UserForm";
+import Load from "../Load/Load";
 
 export const UserEdit = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ export const UserEdit = () => {
   const [isFormChanged, setIsFormChanged] = useState(true);
 
   if (isLoading) {
-    return <span>Загрузка</span>;
+    return <Load />;
   }
 
   const handleFormChange = (changedValues: any) => {

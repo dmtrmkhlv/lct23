@@ -1,8 +1,9 @@
 import { SearchOutlined } from "@ant-design/icons";
-import type { InputRef } from "antd";
+import { InputRef, Modal } from "antd";
 import { Button, Input, Space, Table } from "antd";
 import type { ColumnType, ColumnsType } from "antd/es/table";
 import type { FilterConfirmProps } from "antd/es/table/interface";
+import { PlusCircleOutlined } from "@ant-design/icons";
 import React, { useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 import { useSelector } from "react-redux";
@@ -12,6 +13,9 @@ import { selectUser } from "../../features/auth/authSlice";
 import { Role, User } from "../../types/types";
 import { Paths } from "../../utils/paths";
 import { changeRoleLang } from "../../utils/changeRoleLang";
+import { CustomButton } from "../CustomButton/CustomButton";
+import { UserForm } from "../UserForm/UserForm";
+import { UserAdd } from "../UserAdd/UserAdd";
 
 type DataIndex = keyof User;
 
@@ -177,13 +181,52 @@ const Admin: React.FC = () => {
     },
   ];
 
+  const [open, setOpen] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+
+  const showModal = () => {
+    setOpen(true);
+  };
+
+  const handleOk = () => {
+    setConfirmLoading(true);
+    setTimeout(() => {
+      setOpen(false);
+      setConfirmLoading(false);
+    }, 2000);
+  };
+
+  const handleCancel = () => {
+    console.log("Clicked cancel button");
+    setOpen(false);
+  };
+
   return (
-    <Table
-      columns={columns}
-      dataSource={data}
-      loading={isLoading}
-      rowKey={(user) => user.id}
-    />
+    <>
+      <CustomButton
+        type="primary"
+        onClick={showModal}
+        icon={<PlusCircleOutlined />}
+      >
+        Добавить пользователя
+      </CustomButton>
+      <Table
+        columns={columns}
+        dataSource={data}
+        loading={isLoading}
+        rowKey={(user) => user.id}
+      />
+      <Modal
+        open={open}
+        onOk={handleOk}
+        confirmLoading={confirmLoading}
+        onCancel={handleCancel}
+        okButtonProps={{ disabled: true }}
+        footer={null}
+      >
+        <UserAdd />
+      </Modal>
+    </>
   );
 };
 

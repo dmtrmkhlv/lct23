@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { selectUser } from "../../features/auth/authSlice";
 import { useSelector } from "react-redux";
 import { Role } from "../../types/types";
@@ -9,11 +9,14 @@ import { InternPage } from "../../pages/InternPage";
 import { MentorPage } from "../../pages/MentorPage";
 import { HrPage } from "../../pages/HrPage";
 import { Paths } from "../../utils/paths";
-import { NotFoundPage } from "../../pages/NotFoundPage";
+import { Auth } from "../Auth/Auth";
+import { FullScreen } from "../FullScreen/FullScreen";
+import { Spin } from "antd";
+import Load from "../Load/Load";
 
 const Main: React.FC = () => {
   const navigate = useNavigate();
-  const [role, setRole] = useState<Role | undefined>("candidat");
+  const [role, setRole] = useState<Role | undefined>(undefined);
   const user = useSelector(selectUser);
   console.log(user);
 
@@ -39,7 +42,7 @@ const Main: React.FC = () => {
     case "candidat":
       return <>candidat</>;
     default:
-      return <NotFoundPage />;
+      return <Load />;
   }
 };
 

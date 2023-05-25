@@ -3,6 +3,7 @@ import { User } from "../../types/types";
 import { CustomButton } from "../CustomButton/CustomButton";
 import { CustomInput } from "../CustomInput/CustomInput";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
+import { PasswordInput } from "../PasswordInput";
 
 type Props<T> = {
   onFinish: (values: T) => void;
@@ -11,6 +12,7 @@ type Props<T> = {
   title: string;
   error?: string;
   user?: T;
+  isEmail?: boolean;
   isOwner?: boolean;
   btnDisable?: boolean;
 };
@@ -50,6 +52,7 @@ export const UserForm = ({
   btnText,
   btnDisable,
   error,
+  isEmail,
   handleFormChange,
 }: Props<User>) => {
   return (
@@ -81,6 +84,13 @@ export const UserForm = ({
           placeholder="Роль"
           user={user}
         />
+        {isEmail && (
+          <>
+            <CustomInput type="email" name="email" placeholder="Email" />
+            <PasswordInput name="password" placeholder="Пароль" />
+            <PasswordInput name="confirmPassword" placeholder="Пароль" />
+          </>
+        )}
         <Space direction="vertical" size="large">
           <ErrorMessage message={error} />
           <CustomButton disabled={btnDisable} htmlType="submit">

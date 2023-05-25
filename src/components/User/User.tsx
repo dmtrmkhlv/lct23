@@ -14,6 +14,7 @@ import { Paths } from "../../utils/paths";
 import { CustomButton } from "../CustomButton/CustomButton";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
 import { changeRoleLang } from "../../utils/changeRoleLang";
+import Load from "../Load/Load";
 
 export const User = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ export const User = () => {
   const user = useSelector(selectUser);
 
   if (isLoading) {
-    return <span>Загрузка</span>;
+    return <Load />;
   }
 
   if (!data) {

@@ -11,6 +11,7 @@ import { NotFoundPage } from "./pages/NotFoundPage";
 import { User } from "./components/User/User";
 import { UserEdit } from "./components/UserEdit/UserEdit";
 import { Status } from "./components/Status/Status";
+import { UserAdd } from "./components/UserAdd/UserAdd";
 
 const { useToken } = theme;
 
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
   {
     path: `${Paths.status}/:status`,
     element: <Status />,
+  },
+  {
+    path: Paths.userAdd,
+    element: <UserAdd />,
   },
 ]);
 

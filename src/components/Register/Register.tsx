@@ -41,7 +41,7 @@ export const Register = () => {
   };
 
   return (
-    <Layout>
+    <Layout style={{ background: "#ffffff" }}>
       <Row align="middle" justify="center">
         <Card title="Зарегистрируйтесь" style={{ width: "30rem" }}>
           <Form onFinish={register}>

@@ -4,10 +4,19 @@
     align-items: center;
     margin-bottom: 20px;
     justify-content: space-between;
-    background: grey;
+    background: #00443d;
+    color: #ffffff;
+  }
+
+  .h1{
+    color: #ffffff;
   }
   
   .teamIcon {
     font-size: 26px;
     margin-right: 12px;
+  }
+
+  .button{
+    color: #ffffff;
   }

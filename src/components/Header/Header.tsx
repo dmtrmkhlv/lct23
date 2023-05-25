@@ -28,23 +28,38 @@ export const Header = () => {
         <TeamOutlined className={style.teamIcon} />
         <Link to="/">
           <CustomButton type="ghost">
-            <Typography.Title level={1}>Платформа</Typography.Title>
+            <Typography.Title className={style.h1} level={1}>
+              Платформа
+            </Typography.Title>
           </CustomButton>
         </Link>
       </Space>
       {user ? (
-        <Button type="ghost" icon={<LogoutOutlined />} onClick={onLogoutClick}>
+        <Button
+          type="ghost"
+          className={style.button}
+          icon={<LogoutOutlined />}
+          onClick={onLogoutClick}
+        >
           Выйти
         </Button>
       ) : (
         <Space>
           <Link to="/register">
-            <Button type="ghost" icon={<UserOutlined />}>
+            <Button
+              type="ghost"
+              className={style.button}
+              icon={<UserOutlined />}
+            >
               Зарегистрироваться
             </Button>
           </Link>
           <Link to="/login">
-            <Button type="ghost" icon={<LoginOutlined />}>
+            <Button
+              type="ghost"
+              className={style.button}
+              icon={<LoginOutlined />}
+            >
               Войти
             </Button>
           </Link>

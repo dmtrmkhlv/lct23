@@ -41,7 +41,7 @@ export const Login = () => {
   };
 
   return (
-    <Layout>
+    <Layout style={{ background: "#ffffff" }}>
       <Row align="middle" justify="center">
         <Card title="Войдите" style={{ width: "30rem" }}>
           <Form onFinish={login}>

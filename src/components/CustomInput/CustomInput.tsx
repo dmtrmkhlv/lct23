@@ -49,6 +49,7 @@ export const CustomInput = ({
           <Select
             options={selectOptions}
             size="large"
+            placeholder="Выберите роль пользователя"
             // onChange={(event: ChangeEvent<HTMLSelectElement>) =>
             //   console.log(event)
             // }
