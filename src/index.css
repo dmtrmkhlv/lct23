@@ -26,3 +26,6 @@ span:hover, a:hover{
 }
 
 
+.ant-tabs-tab:not(.ant-tabs-tab-active) {
+  background-color: #6f6f6f6f !important;
+}

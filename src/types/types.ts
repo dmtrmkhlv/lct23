@@ -2,6 +2,16 @@ import { ReactNode } from "react";
 
 export type Require = "protected" | "public" | undefined;
 
+export type InputShow = {
+  roleParam: boolean;
+  emailParam: boolean;
+  passwordParam: boolean;
+  firstNameParam: boolean;
+  lastNameParam: boolean;
+  usernameParam: boolean;
+  phoneParam: boolean;
+};
+
 export type Role =
   | "candidat"
   | "curator"
@@ -18,12 +28,12 @@ export type ErrorWithMessage = {
 };
 
 export type MainPageProps = {
-  user?: (User & { token: string }) | null;
+  user?: (UserType & { token: string }) | null;
 };
 
 export interface LayoutProps {
   children: ReactNode;
-  user?: (User & { token: string }) | null;
+  user?: (UserType & { token: string }) | null;
 }
 
 export interface UserAuth {
@@ -31,7 +41,7 @@ export interface UserAuth {
   password: string;
 }
 
-export interface User {
+export interface UserType {
   id: string;
   email: string;
   password: string;

@@ -10,14 +10,14 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useGetAllUsersQuery } from "../../features/api/usersAPI";
 import { selectUser } from "../../features/auth/authSlice";
-import { Role, User } from "../../types/types";
+import { Role, UserType } from "../../types/types";
 import { Paths } from "../../utils/paths";
 import { changeRoleLang } from "../../utils/changeRoleLang";
 import { CustomButton } from "../CustomButton/CustomButton";
 import { UserForm } from "../UserForm/UserForm";
 import { UserAdd } from "../UserAdd/UserAdd";
 
-type DataIndex = keyof User;
+type DataIndex = keyof UserType;
 
 const Admin: React.FC = () => {
   const navigate = useNavigate();
@@ -43,7 +43,9 @@ const Admin: React.FC = () => {
     setSearchText("");
   };
 
-  const getColumnSearchProps = (dataIndex: DataIndex): ColumnType<User> => ({
+  const getColumnSearchProps = (
+    dataIndex: DataIndex
+  ): ColumnType<UserType> => ({
     filterDropdown: ({
       setSelectedKeys,
       selectedKeys,
@@ -132,7 +134,7 @@ const Admin: React.FC = () => {
       ),
   });
 
-  const columns: ColumnsType<User> = [
+  const columns: ColumnsType<UserType> = [
     {
       title: "Имя",
       dataIndex: "firstName",

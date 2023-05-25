@@ -1,8 +1,8 @@
 import { Form, Input, Select } from "antd";
-import { User } from "../../types/types";
+import { UserType } from "../../types/types";
 
 type Props = {
-  user?: User;
+  user?: UserType;
   name: string;
   placeholder: string;
   type?: string;
@@ -27,7 +27,12 @@ export const CustomInput = ({
       return (
         <Form.Item
           name={name}
-          rules={[{ required: true, message: "Обязательное поле" }]}
+          rules={[
+            {
+              required: name === "email" || name === "password" ? true : false,
+              message: "Обязательное поле",
+            },
+          ]}
           shouldUpdate={true}
         >
           <Input

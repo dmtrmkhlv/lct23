@@ -9,16 +9,14 @@ import { InternPage } from "../../pages/InternPage";
 import { MentorPage } from "../../pages/MentorPage";
 import { HrPage } from "../../pages/HrPage";
 import { Paths } from "../../utils/paths";
-import { Auth } from "../Auth/Auth";
-import { FullScreen } from "../FullScreen/FullScreen";
-import { Spin } from "antd";
 import Load from "../Load/Load";
+import { CandidatPage } from "../../pages/CandidatPage";
 
 const Main: React.FC = () => {
   const navigate = useNavigate();
   const [role, setRole] = useState<Role | undefined>(undefined);
   const user = useSelector(selectUser);
-  console.log(user);
+  // console.log(user);
 
   useEffect(() => {
     if (user) {
@@ -40,7 +38,7 @@ const Main: React.FC = () => {
     case "hr":
       return <HrPage user={user} />;
     case "candidat":
-      return <>candidat</>;
+      return <CandidatPage user={user} />;
     default:
       return <Load />;
   }

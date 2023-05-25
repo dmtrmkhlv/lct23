@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Paths } from "../../utils/paths";
-import { User } from "../../types/types";
+import { UserType } from "../../types/types";
 import { selectUser } from "../../features/auth/authSlice";
 import { isErrorWithMessage } from "../../utils/is-error-with-message";
 import { useAddUserMutation } from "../../features/api/usersAPI";
@@ -20,7 +20,7 @@ export const UserAdd = () => {
     }
   }, [user, navigate]);
 
-  const handleAddUser = async (data: User) => {
+  const handleAddUser = async (data: UserType) => {
     try {
       await addUser(data).unwrap();
 

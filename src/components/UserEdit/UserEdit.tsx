@@ -8,7 +8,7 @@ import {
 } from "../../features/api/usersAPI";
 import { selectUser } from "../../features/auth/authSlice";
 import Layout from "../../layouts/Layout";
-import { User } from "../../types/types";
+import { UserType } from "../../types/types";
 import { isErrorWithMessage } from "../../utils/is-error-with-message";
 import { objCompare } from "../../utils/objCompare";
 import { Paths } from "../../utils/paths";
@@ -33,8 +33,8 @@ export const UserEdit = () => {
     setIsFormChanged(objCompare(data, changedUser));
   };
 
-  const handleEditUser = async (user: User) => {
-    console.log(user);
+  const handleEditUser = async (user: UserType) => {
+    // console.log(user);
     try {
       const editedUser = {
         ...data,
@@ -62,6 +62,7 @@ export const UserEdit = () => {
           onFinish={handleEditUser}
           title="Редактировать пользователя"
           user={data}
+          userOwner={userOwner}
           btnText="Сохранить"
           error={error}
           btnDisable={isFormChanged}

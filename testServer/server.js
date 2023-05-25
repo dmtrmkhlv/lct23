@@ -86,9 +86,9 @@ const fakeDBStart = [
   },
   {
     id: nanoid(),
-    email: "intern2@mail.ru",
+    email: "candidat@mail.ru",
     password: "123123",
-    role: "intern",
+    role: "candidat",
     firstName: faker.person.lastName(),
     lastName: faker.person.lastName(),
     username: faker.internet.userName(),

@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { User } from "../../types/types";
+import { UserType } from "../../types/types";
 import { usersApi } from "../api/usersAPI";
 import { RootState } from "../../store/store";
 
 interface InitialState {
-  users: User[] | null;
+  users: UserType[] | null;
 }
 
 const initialState: InitialState = {

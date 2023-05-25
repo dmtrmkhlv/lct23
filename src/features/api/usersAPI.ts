@@ -1,21 +1,21 @@
-import { User } from "../../types/types";
+import { UserType } from "../../types/types";
 import { api } from "./api";
 
 export const usersApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getAllUsers: builder.query<User[], void>({
+    getAllUsers: builder.query<UserType[], void>({
       query: () => ({
         url: "/users",
         method: "GET",
       }),
     }),
-    getUser: builder.query<User, string>({
+    getUser: builder.query<UserType, string>({
       query: (id) => ({
         url: `/users/${id}`,
         method: "GET",
       }),
     }),
-    editUser: builder.mutation<string, User>({
+    editUser: builder.mutation<string, UserType>({
       query: (employee) => ({
         url: `/users/edit/${employee.id}`,
         method: "PUT",
@@ -29,7 +29,7 @@ export const usersApi = api.injectEndpoints({
         body: { id },
       }),
     }),
-    addUser: builder.mutation<User, User>({
+    addUser: builder.mutation<UserType, UserType>({
       query: (employee) => ({
         url: "/users/add",
         method: "POST",
