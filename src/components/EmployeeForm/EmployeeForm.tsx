@@ -24,8 +24,8 @@ export const EmployeeForm = ({
       <Form name="add-employee" onFinish={onFinish} initialValues={employee}>
         <CustomInput type="text" name="firstName" placeholder="Имя" />
         <CustomInput name="lastName" placeholder="Фамилия" />
-        <CustomInput type="number" name="age" placeholder="Возраст" />
-        <CustomInput name="address" placeholder="Адрес" />
+        {/* <CustomInput type="number" name="age" placeholder="Возраст" />
+        <CustomInput name="address" placeholder="Адрес" /> */}
         <Space direction="vertical" size="large">
           <ErrorMessage message={error} />
           <CustomButton htmlType="submit">{btnText}</CustomButton>

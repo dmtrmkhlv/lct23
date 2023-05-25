@@ -1,16 +1,17 @@
-import React from "react";
-import { Form, Input, Select, Space } from "antd";
+import { Form, Input, Select } from "antd";
+import { User } from "../../types/types";
 
 type Props = {
+  user?: User;
   name: string;
   placeholder: string;
   type?: string;
-  defaultValue?: string;
   selectOptions?: {
     value: string;
     label: string;
   }[];
   disabled?: boolean;
+  isFormChanged?: any;
 };
 
 export const CustomInput = ({
@@ -18,10 +19,10 @@ export const CustomInput = ({
   name,
   placeholder,
   selectOptions,
-  defaultValue,
   disabled = false,
 }: Props) => {
   switch (type) {
+    case "email":
     case "text":
       return (
         <Form.Item
@@ -46,9 +47,11 @@ export const CustomInput = ({
           shouldUpdate={true}
         >
           <Select
-            defaultValue={defaultValue}
             options={selectOptions}
             size="large"
+            // onChange={(event: ChangeEvent<HTMLSelectElement>) =>
+            //   console.log(event)
+            // }
           />
         </Form.Item>
       );

@@ -1,13 +1,16 @@
 import { Row } from "antd";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   useEditUserMutation,
   useGetUserQuery,
 } from "../../features/api/usersAPI";
+import { selectUser } from "../../features/auth/authSlice";
 import Layout from "../../layouts/Layout";
 import { User } from "../../types/types";
 import { isErrorWithMessage } from "../../utils/is-error-with-message";
+import { objCompare } from "../../utils/objCompare";
 import { Paths } from "../../utils/paths";
 import { UserForm } from "../UserForm/UserForm";
 
@@ -17,23 +20,20 @@ export const UserEdit = () => {
   const [error, setError] = useState("");
   const { data, isLoading } = useGetUserQuery(params.id || "");
   const [editUser] = useEditUserMutation();
+  const userOwner = useSelector(selectUser);
+  const [isFormChanged, setIsFormChanged] = useState(true);
 
   if (isLoading) {
     return <span>Загрузка</span>;
   }
 
-  const usersCompare = (userInit: any, user: any): boolean => {
-    return JSON.stringify(userInit) === JSON.stringify(user);
+  const handleFormChange = (changedValues: any) => {
+    const changedUser = { ...data, ...changedValues };
+    setIsFormChanged(objCompare(data, changedUser));
   };
 
   const handleEditUser = async (user: User) => {
-    console.log(
-      usersCompare(data, {
-        ...data,
-        ...user,
-      })
-    );
-
+    console.log(user);
     try {
       const editedUser = {
         ...data,
@@ -63,7 +63,9 @@ export const UserEdit = () => {
           user={data}
           btnText="Сохранить"
           error={error}
-          btnDisable={false}
+          btnDisable={isFormChanged}
+          isOwner={userOwner?.id !== data?.id}
+          handleFormChange={handleFormChange}
         />
       </Row>
     </Layout>

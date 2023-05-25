@@ -168,11 +168,11 @@ const Admin: React.FC = () => {
       // </Link>
     },
     {
-      title: "Правка",
+      title: "Информация",
       dataIndex: "",
       key: "edit",
       render: (record) => (
-        <Link to={`${Paths.user}/${record.id}`}>Редактировать</Link>
+        <Link to={`${Paths.user}/${record.id}`}>Подробнее</Link>
       ),
     },
   ];

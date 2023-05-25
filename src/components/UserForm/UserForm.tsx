@@ -6,10 +6,12 @@ import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
 
 type Props<T> = {
   onFinish: (values: T) => void;
+  handleFormChange?: any;
   btnText: string;
   title: string;
   error?: string;
   user?: T;
+  isOwner?: boolean;
   btnDisable?: boolean;
 };
 
@@ -34,36 +36,50 @@ const selectOptions = [
     value: "candidat",
     label: "Кандидат",
   },
+  {
+    value: "intern",
+    label: "Стажер",
+  },
 ];
 
 export const UserForm = ({
   onFinish,
   title,
   user,
+  isOwner,
   btnText,
   btnDisable,
   error,
+  handleFormChange,
 }: Props<User>) => {
   return (
     <Card title={title} style={{ width: "30rem" }}>
-      <Form name="add-employee" onFinish={onFinish} initialValues={user}>
+      <Form
+        name="add-employee"
+        onFinish={onFinish}
+        initialValues={user}
+        onValuesChange={handleFormChange}
+      >
         <CustomInput
           type="text"
           name="firstName"
           placeholder="Имя"
-          disabled={true}
+          user={user}
+          disabled={isOwner}
         />
         <CustomInput
           type="text"
           name="lastName"
           placeholder="Фамилия"
-          disabled={true}
+          user={user}
+          disabled={isOwner}
         />
         <CustomInput
           type="select"
           name="role"
           selectOptions={selectOptions}
           placeholder="Роль"
+          user={user}
         />
         <Space direction="vertical" size="large">
           <ErrorMessage message={error} />
