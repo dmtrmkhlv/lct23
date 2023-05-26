@@ -2,6 +2,8 @@ import { Tabs } from "antd";
 import { Profile } from "../Profile/Profile";
 import { Apply } from "../Apply/Apply";
 import { ExternalLink } from "../ExternalLink/ExternalLink";
+import { Testing } from "../Testing/Testing";
+import { CareerSchool } from "../CareerSchool/CareerSchool";
 
 const Candidat: React.FC = () => {
   // const operations = <Button>Карьерная школа</Button>;
@@ -26,12 +28,12 @@ const Candidat: React.FC = () => {
           {
             label: "Тестирование",
             key: "Тестирование",
-            children: <ExternalLink link="/jbjjb" btnText="Перейти" />,
+            children: <Testing />,
           },
           {
             label: "Карьерная школа",
             key: "Карьерная школа",
-            children: "Карьерная школа",
+            children: <CareerSchool />,
           },
         ]}
       />
