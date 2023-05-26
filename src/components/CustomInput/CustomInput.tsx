@@ -4,6 +4,7 @@ import { UserType } from "../../types/types";
 type Props = {
   user?: UserType;
   name: string;
+  label?: string;
   placeholder: string;
   type?: string;
   selectOptions?: {
@@ -19,6 +20,7 @@ export const CustomInput = ({
   name,
   placeholder,
   selectOptions,
+  label,
   disabled = false,
 }: Props) => {
   switch (type) {
@@ -27,6 +29,7 @@ export const CustomInput = ({
       return (
         <Form.Item
           name={name}
+          label={label}
           rules={[
             {
               required: name === "email" || name === "password" ? true : false,
@@ -48,13 +51,15 @@ export const CustomInput = ({
       return (
         <Form.Item
           name={name}
+          label={label}
           rules={[{ required: true, message: "Обязательное поле" }]}
           shouldUpdate={true}
         >
           <Select
             options={selectOptions}
             size="large"
-            placeholder="Выберите роль пользователя"
+            // placeholder="Выберите роль пользователя"
+            placeholder={placeholder}
             // onChange={(event: ChangeEvent<HTMLSelectElement>) =>
             //   console.log(event)
             // }

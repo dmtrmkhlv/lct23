@@ -12,6 +12,7 @@ import { User } from "./components/User/User";
 import { UserEdit } from "./components/UserEdit/UserEdit";
 import { Status } from "./components/Status/Status";
 import { UserAdd } from "./components/UserAdd/UserAdd";
+import { UserApplyEdit } from "./components/UserApplyEdit/UserApplyEdit";
 
 const { useToken } = theme;
 
@@ -50,6 +51,18 @@ const router = createBrowserRouter([
     path: Paths.userAdd,
     element: <UserAdd />,
   },
+  // {
+  //   path: Paths.userApply,
+  //   element: <UserApply />,
+  // },
+  {
+    path: `${Paths.userApplyEdit}/:id`,
+    element: <UserApplyEdit />,
+  },
+  // {
+  //   path: Paths.userApplyAdd,
+  //   element: <UserApplyAdd />,
+  // },
 ]);
 
 function App() {

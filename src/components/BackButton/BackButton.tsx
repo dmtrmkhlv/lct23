@@ -1,5 +1,4 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Paths } from "../../utils/paths";
 import { CustomButton } from "../CustomButton/CustomButton";
 export const BackButton: React.FC = () => {
   const navigate = useNavigate();
