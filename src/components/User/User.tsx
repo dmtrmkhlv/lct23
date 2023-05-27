@@ -63,17 +63,11 @@ export const User = () => {
   return (
     <Layout>
       <Descriptions title="Информация о пользователе" bordered>
-        <Descriptions.Item
-          label="Имя"
-          span={3}
-        >{`${data.firstName}`}</Descriptions.Item>
+        <Descriptions.Item label="Имя">{`${data.firstName}`}</Descriptions.Item>
 
-        <Descriptions.Item
-          label="Фамилия"
-          span={3}
-        >{`${data.lastName}`}</Descriptions.Item>
+        <Descriptions.Item label="Фамилия">{`${data.lastName}`}</Descriptions.Item>
 
-        <Descriptions.Item label="Роль" span={3}>{`${changeRoleLang(
+        <Descriptions.Item label="Роль">{`${changeRoleLang(
           data.role
         )}`}</Descriptions.Item>
       </Descriptions>

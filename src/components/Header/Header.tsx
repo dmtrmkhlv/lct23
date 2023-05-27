@@ -28,9 +28,10 @@ export const Header = () => {
         <TeamOutlined className={style.teamIcon} />
         <Link to="/">
           <CustomButton type="ghost">
-            <Typography.Title className={style.h1} level={1}>
-              Платформа
-            </Typography.Title>
+            <h1>Платформа</h1>
+            {/* <Typography.Title className={style.h1} level={1}>
+              
+            </Typography.Title> */}
           </CustomButton>
         </Link>
       </Space>

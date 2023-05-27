@@ -49,7 +49,7 @@ export interface UserType {
   firstName: string | "";
   lastName: string | "";
   username: string | "";
-  phone: number | "";
+  phone: string | "";
 }
 
 export interface AuthResponse {

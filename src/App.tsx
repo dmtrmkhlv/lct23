@@ -56,7 +56,7 @@ const router = createBrowserRouter([
   //   element: <UserApply />,
   // },
   {
-    path: `${Paths.userApplyEdit}/:id`,
+    path: `${Paths.userApplyEdit}`,
     element: <UserApplyEdit />,
   },
   // {

@@ -85,7 +85,7 @@ const fakeDBStart = [
     phone: faker.phone.number(),
   },
   {
-    id: nanoid(),
+    id: "candidat",
     email: "candidat@mail.ru",
     password: "123123",
     role: "candidat",
@@ -151,6 +151,74 @@ app.get("/api/users/:id", (req, res) => {
   const userLogin = fakeDB.find((user) => {
     return user.id === req.params.id;
   });
+
+  if (userLogin) {
+    res.status(200).json(userLogin);
+  } else {
+    res.status(400);
+    res.send("User not found");
+  }
+});
+
+app.get("/api/users/apply/:id", (req, res) => {
+  const userLogin = {
+    isSend: true,
+    id: "candidat",
+    firstName: "Иван",
+    lastName: "Иванов",
+    secondName: "Иванович",
+    gender: "man",
+    city: "Москва",
+    cityArea: "SAO",
+    citizenship: "ru",
+    study: "SPO",
+    email: "ivanov@mail.ru",
+    phone: "+79123456789",
+    studyName: "МГТУ им. Н.Э. Баумана",
+    studyCity: "Москва",
+    studyFac: "Факультет информатики и систем управления",
+    studySpec: "Информационные системы и технологии",
+    studyEnd: "2020-05-27T16:54:02.300Z",
+    studyGrade: "bak",
+    experience: [
+      {
+        experienceName: "ООО Рога и копыта",
+        experienceDate: "2023-02-27T16:54:17.957Z",
+        experienceText: "Работал программистом",
+      },
+      {
+        experienceName: "Веселый молочник",
+        experienceDate: "2023-02-27T16:54:17.957Z",
+        experienceText: "Работал программистом",
+      },
+    ],
+    internDirection: "Веб-разработка",
+    internAbout:
+      "Хочу получить опыт в веб-разработке и изучить новые технологии",
+    internSchedule: "Полный рабочий день",
+    photo: {
+      file: {
+        uid: "rc-upload-1612345678901-1",
+      },
+      fileList: [
+        {
+          uid: "rc-upload-1612345678901-1",
+          lastModified: 1612345678901,
+          lastModifiedDate: "2021-02-03T12:01:18.901Z",
+          name: "photo.jpg",
+          size: 12345,
+          type: "image/jpeg",
+          percent: 100,
+          originFileObj: {
+            uid: "rc-upload-1612345678901-1",
+          },
+        },
+      ],
+    },
+    vk: "https://vk.com/ivanov",
+    telegram: "@ivanov",
+    agreement: true,
+  };
 
   if (userLogin) {
     res.status(200).json(userLogin);

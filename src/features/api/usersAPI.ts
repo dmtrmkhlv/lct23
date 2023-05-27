@@ -1,3 +1,4 @@
+import { UserApplyType } from "../../types/UserApplyType";
 import { UserType } from "../../types/types";
 import { api } from "./api";
 
@@ -16,10 +17,10 @@ export const usersApi = api.injectEndpoints({
       }),
     }),
     editUser: builder.mutation<string, UserType>({
-      query: (employee) => ({
-        url: `/users/edit/${employee.id}`,
+      query: (user) => ({
+        url: `/users/edit/${user.id}`,
         method: "PUT",
-        body: employee,
+        body: user,
       }),
     }),
     removeUser: builder.mutation<string, string>({
@@ -30,10 +31,23 @@ export const usersApi = api.injectEndpoints({
       }),
     }),
     addUser: builder.mutation<UserType, UserType>({
-      query: (employee) => ({
+      query: (user) => ({
         url: "/users/add",
         method: "POST",
-        body: employee,
+        body: user,
+      }),
+    }),
+    getUserApply: builder.query<UserApplyType, string>({
+      query: (id) => ({
+        url: `/users/apply/${id}`,
+        method: "GET",
+      }),
+    }),
+    addUserApply: builder.mutation<UserApplyType, UserApplyType>({
+      query: (apply) => ({
+        url: "/users/apply/add",
+        method: "POST",
+        body: apply,
       }),
     }),
   }),
@@ -45,8 +59,18 @@ export const {
   useGetUserQuery,
   useEditUserMutation,
   useRemoveUserMutation,
+  useGetUserApplyQuery,
+  useAddUserApplyMutation,
 } = usersApi;
 
 export const {
-  endpoints: { getAllUsers, getUser, editUser, removeUser, addUser },
+  endpoints: {
+    getAllUsers,
+    getUser,
+    editUser,
+    removeUser,
+    addUser,
+    getUserApply,
+    addUserApply,
+  },
 } = usersApi;

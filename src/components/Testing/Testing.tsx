@@ -27,7 +27,7 @@ export const Testing = () => {
   return (
     <Card>
       <Descriptions title="Результаты теста" bordered>
-        <Descriptions.Item label="Тест 1" span={3}>
+        <Descriptions.Item label="Тест 1">
           <Space direction="vertical">
             <Text type="secondary">58.5 </Text>
           </Space>

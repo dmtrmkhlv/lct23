@@ -15,11 +15,11 @@ const Candidat: React.FC = () => {
         size={"large"}
         // centered={true}
         items={[
-          {
-            label: "Профиль",
-            key: "Профиль",
-            children: <Profile />,
-          },
+          // {
+          //   label: "Профиль",
+          //   key: "Профиль",
+          //   children: <Profile />,
+          // },
           {
             label: "Заявка",
             key: "Заявка",

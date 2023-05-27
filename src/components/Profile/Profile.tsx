@@ -60,28 +60,16 @@ export const Profile = () => {
   return (
     <Card>
       <Descriptions title="Основная информация" bordered>
-        <Descriptions.Item
-          label="Имя"
-          span={3}
-        >{`${data.firstName}`}</Descriptions.Item>
+        <Descriptions.Item label="Имя">{`${data.firstName}`}</Descriptions.Item>
 
-        <Descriptions.Item
-          label="Фамилия"
-          span={3}
-        >{`${data.lastName}`}</Descriptions.Item>
+        <Descriptions.Item label="Фамилия">{`${data.lastName}`}</Descriptions.Item>
 
-        <Descriptions.Item label="Статус" span={3}>{`${changeRoleLang(
+        <Descriptions.Item label="Статус">{`${changeRoleLang(
           data.role
         )}`}</Descriptions.Item>
 
-        <Descriptions.Item
-          label="Email"
-          span={3}
-        >{`${data.email}`}</Descriptions.Item>
-        <Descriptions.Item
-          label="Телефон"
-          span={3}
-        >{`${data.phone}`}</Descriptions.Item>
+        <Descriptions.Item label="Email">{`${data.email}`}</Descriptions.Item>
+        <Descriptions.Item label="Телефон">{`${data.phone}`}</Descriptions.Item>
       </Descriptions>
       <Divider orientation="left">Действия</Divider>
       <Space>

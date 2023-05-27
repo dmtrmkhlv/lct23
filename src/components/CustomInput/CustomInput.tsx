@@ -1,8 +1,9 @@
-import { Form, Input, Select } from "antd";
+import { DatePicker, Form, Input, Select } from "antd";
 import { UserType } from "../../types/types";
+import { UserApplyType } from "../../types/UserApplyType";
 
 type Props = {
-  user?: UserType;
+  user?: UserType | UserApplyType;
   name: string;
   label?: string;
   placeholder: string;
@@ -13,6 +14,9 @@ type Props = {
   }[];
   disabled?: boolean;
   isFormChanged?: any;
+  required?: boolean;
+  picker?: "year" | "date" | "time" | "month" | "week" | "quarter" | undefined;
+  onChange?: (data: any | null) => void;
 };
 
 export const CustomInput = ({
@@ -21,7 +25,10 @@ export const CustomInput = ({
   placeholder,
   selectOptions,
   label,
+  required = false,
   disabled = false,
+  picker = "year",
+  onChange,
 }: Props) => {
   switch (type) {
     case "email":
@@ -30,9 +37,10 @@ export const CustomInput = ({
         <Form.Item
           name={name}
           label={label}
+          required={required}
           rules={[
             {
-              required: name === "email" || name === "password" ? true : false,
+              required: required,
               message: "Обязательное поле",
             },
           ]}
@@ -43,16 +51,59 @@ export const CustomInput = ({
             placeholder={placeholder}
             type={type}
             size="large"
+            onChange={onChange}
           />
         </Form.Item>
       );
-
+    case "phone":
+      return (
+        <Form.Item
+          name={name}
+          label={label}
+          required={required}
+          rules={[
+            { required: required, message: "Обязательное поле" },
+            // { pattern: /^\d{10}$/, message: "Формат номера не правильный" },
+          ]}
+          shouldUpdate={true}
+        >
+          <Input
+            disabled={disabled}
+            placeholder={placeholder}
+            type={type}
+            size="large"
+            onChange={onChange}
+          />
+        </Form.Item>
+      );
+    case "date":
+      return (
+        <Form.Item
+          name={name}
+          label={label}
+          required={required}
+          rules={[
+            { required: required, message: "Обязательное поле" },
+            // { pattern: /^\d{10}$/, message: "Формат номера не правильный" },
+          ]}
+          shouldUpdate={true}
+        >
+          <DatePicker picker={picker} onChange={onChange} />
+          {/* <Input
+            disabled={disabled}
+            placeholder={placeholder}
+            type={type}
+            size="large"
+          /> */}
+        </Form.Item>
+      );
     case "select":
       return (
         <Form.Item
           name={name}
           label={label}
-          rules={[{ required: true, message: "Обязательное поле" }]}
+          required={required}
+          rules={[{ required: required, message: "Обязательное поле" }]}
           shouldUpdate={true}
         >
           <Select
@@ -60,6 +111,7 @@ export const CustomInput = ({
             size="large"
             // placeholder="Выберите роль пользователя"
             placeholder={placeholder}
+            onChange={onChange}
             // onChange={(event: ChangeEvent<HTMLSelectElement>) =>
             //   console.log(event)
             // }
