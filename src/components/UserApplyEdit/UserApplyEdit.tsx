@@ -1,10 +1,12 @@
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
+  Badge,
   Button,
   Card,
   Checkbox,
   DatePicker,
+  Descriptions,
   Divider,
   Form,
   Input,
@@ -108,10 +110,6 @@ export const UserApplyEdit = () => {
   useEffect(() => {
     handleStudyChange(form);
   }, [form, handleStudyChange]);
-
-  if (isLoading) {
-    return <Load />;
-  }
 
   const handleFormChange = (changedValues: any) => {
     const changedUser = { ...formatData, ...changedValues };
@@ -295,400 +293,475 @@ export const UserApplyEdit = () => {
     console.log("values", isFormSend);
   };
 
+  if (isLoading) {
+    return <Load />;
+  }
+
   return (
-    <Layout>
-      <Row align="middle" justify="center">
-        <Card title="Анкета" style={{ width: "30rem" }}>
-          <Form
-            name="userApply"
-            onFinish={handleEditUserApply}
-            initialValues={formatData}
-            onValuesChange={handleFormChange}
-            layout="vertical"
-            form={form}
-            disabled={formatData.isSend}
-          >
-            <Divider orientation="left">Основная информация</Divider>
-            <CustomInput
-              type="text"
-              name="firstName"
-              placeholder="Имя"
-              label="Имя"
-              user={formatData}
-              disabled={formatData.isSend}
-              required={true}
-            />
-            <CustomInput
-              type="text"
-              name="lastName"
-              placeholder="Фамилия"
-              label="Фамилия"
-              user={formatData}
-              disabled={formatData.isSend}
-              required={true}
-            />
-            <CustomInput
-              type="text"
-              name="secondName"
-              label="Отчество"
-              placeholder="Отчество"
-              user={formatData}
-              disabled={formatData.isSend}
-              required={true}
-            />
-            <CustomInput
-              type="select"
-              name="gender"
-              label="Пол"
-              selectOptions={genderOptions}
-              placeholder="Пол"
-              user={formatData}
-              required={true}
-              disabled={formatData.isSend}
-            />
-            <CustomInput
-              type="text"
-              name="city"
-              label="Город проживания"
-              placeholder="Город проживания"
-              user={formatData}
-              required={true}
-              disabled={formatData.isSend}
-            />
-            <CustomInput
-              type="select"
-              name="cityArea"
-              label="Район проживания"
-              selectOptions={cityAreaOptions}
-              placeholder="Район проживания"
-              required={true}
-              disabled={formatData.isSend}
-            />
-            <CustomInput
-              type="select"
-              name="citizenship"
-              label="Гражданство"
-              selectOptions={citizenshipOptions}
-              placeholder="Гражданство"
-              user={formatData}
-              required={true}
-              disabled={formatData.isSend}
-            />
-            <CustomInput
-              type="select"
-              name="study"
-              label="Образование"
-              selectOptions={studyOptions}
-              placeholder="Образование"
-              user={formatData}
-              required={true}
-              disabled={formatData.isSend}
-            />
-            <CustomInput
-              type="email"
-              name="email"
-              label="Email"
-              placeholder="Email"
-              user={formatData}
-              disabled={formatData.isSend}
-              required={true}
-            />
-            <CustomInput
-              type="phone"
-              name="phone"
-              label="Мобильный телефон"
-              placeholder="Мобильный телефон"
-              user={formatData}
-              disabled={formatData.isSend}
-              required={true}
-            />
-            <Divider orientation="left">Образование</Divider>
-            <Card style={{}}>
-              <Space direction="vertical">
-                <Text>
-                  Если ты еще студент, обязательно укажи место учебы и уровень
-                  получаемого образования: бакалавриат/специалитет/магистратура.
-                </Text>
-              </Space>
-            </Card>
-            <CustomInput
-              type="text"
-              name="studyName"
-              label="Учебное заведение"
-              placeholder="Учебное заведение"
-              user={formatData}
-              onChange={handleStudyChange}
-              required={requiredStuduFields}
-              disabled={formatData.isSend}
-            />
-            <CustomInput
-              type="text"
-              name="studyCity"
-              label="Город"
-              placeholder="Город"
-              user={formatData}
-              onChange={handleStudyChange}
-              required={requiredStuduFields}
-              disabled={formatData.isSend}
-            />
-            <CustomInput
-              type="text"
-              name="studyFac"
-              label="Факультет"
-              placeholder="Факультет"
-              user={formatData}
-              onChange={handleStudyChange}
-              required={requiredStuduFields}
-              disabled={formatData.isSend}
-            />
-            <CustomInput
-              type="text"
-              name="studySpec"
-              label="Специальность"
-              placeholder="Специальность"
-              user={formatData}
-              onChange={handleStudyChange}
-              required={requiredStuduFields}
-              disabled={formatData.isSend}
-            />
-            <Text code>
-              Если ты еще учишься, напиши предполагаемый год выпуска
+    <>
+      <Card>
+        <Descriptions
+          title="Отправка заявки на участие в отборе на стажировку"
+          bordered
+        >
+          <Descriptions.Item label="Статус заявки">
+            <Space direction="vertical">
+              {!formatData?.isSend && (
+                <Badge status="default" text="заявка не отправлена" />
+              )}
+              {formatData?.isSend && (
+                <Badge status="processing" text="заявка на рассмотрении" />
+              )}
+            </Space>
+          </Descriptions.Item>
+        </Descriptions>
+        <Card style={{}}>
+          <Space direction="vertical">
+            <Text>
+              <p>
+                {" "}
+                Прямо сейчас ты делаешь свой первый шаг на пути к карьере в
+                Правительстве Москвы — участвуешь в отборе на стажировку,
+                которая пройдет с 1 августа 2023 года по 31 января 2024 года. Мы
+                ждем твою заявку до 17 апреля.
+              </p>
+              <p>
+                {" "}
+                Стать стажерами Правительства Москвы могут студенты бакалавриата
+                или специалитета, обучающиеся на последнем курсе, магистранты и
+                выпускники вузов, получившие первое образование с 2016 по 2022
+                год.{" "}
+              </p>
+              <p>
+                Чтобы подать заявку, заполни анкету ниже. Внимательно проверь,
+                правильно ли введены все данные и особенно адрес электронной
+                почты — на него в течение двух недель после подачи заявки придет
+                информация о твоих следующих шагах.{" "}
+              </p>
+              <p>
+                {" "}
+                Анкета — это начало нашего знакомства. Мы хотим узнать о твоем
+                образовании, опыте работы, если он есть, увлечениях или
+                внеучебной деятельности, о навыках, которые ты приобрел во время
+                учебы. Обязательно заполни анкету полностью перед подачей заявки
+                — мы не сможем увидеть изменения, внесенные после отклика.
+              </p>
+              <p> Желаем удачи!</p>
             </Text>
-            <CustomInput
+          </Space>
+        </Card>
+        {/* <Divider orientation="left">Действия</Divider>
+        <Space>
+          <Link to={`/apply/edit`}>
+            <CustomButton shape="round" type="default" icon={<EditOutlined />}>
+              Заполнить анкету
+            </CustomButton>
+          </Link>
+        </Space> */}
+      </Card>
+      {/* <Layout> */}
+      <Card title="Анкета" style={{ marginTop: "20px" }}>
+        <Form
+          name="userApply"
+          onFinish={handleEditUserApply}
+          initialValues={formatData}
+          onValuesChange={handleFormChange}
+          layout="vertical"
+          form={form}
+          disabled={formatData?.isSend}
+        >
+          <Divider orientation="left">Основная информация</Divider>
+          <CustomInput
+            type="text"
+            name="firstName"
+            placeholder="Имя"
+            label="Имя"
+            user={formatData}
+            disabled={formatData?.isSend}
+            required={true}
+          />
+          <CustomInput
+            type="text"
+            name="lastName"
+            placeholder="Фамилия"
+            label="Фамилия"
+            user={formatData}
+            disabled={formatData?.isSend}
+            required={true}
+          />
+          <CustomInput
+            type="text"
+            name="secondName"
+            label="Отчество"
+            placeholder="Отчество"
+            user={formatData}
+            disabled={formatData?.isSend}
+            required={true}
+          />
+          <CustomInput
+            type="select"
+            name="gender"
+            label="Пол"
+            selectOptions={genderOptions}
+            placeholder="Пол"
+            user={formatData}
+            required={true}
+            disabled={formatData?.isSend}
+          />
+          <CustomInput
+            type="text"
+            name="city"
+            label="Город проживания"
+            placeholder="Город проживания"
+            user={formatData}
+            required={true}
+            disabled={formatData?.isSend}
+          />
+          <CustomInput
+            type="select"
+            name="cityArea"
+            label="Район проживания"
+            selectOptions={cityAreaOptions}
+            placeholder="Район проживания"
+            required={true}
+            disabled={formatData?.isSend}
+          />
+          <CustomInput
+            type="select"
+            name="citizenship"
+            label="Гражданство"
+            selectOptions={citizenshipOptions}
+            placeholder="Гражданство"
+            user={formatData}
+            required={true}
+            disabled={formatData?.isSend}
+          />
+          <CustomInput
+            type="select"
+            name="study"
+            label="Образование"
+            selectOptions={studyOptions}
+            placeholder="Образование"
+            user={formatData}
+            required={true}
+            disabled={formatData?.isSend}
+          />
+          <CustomInput
+            type="email"
+            name="email"
+            label="Email"
+            placeholder="Email"
+            user={formatData}
+            disabled={formatData?.isSend}
+            required={true}
+          />
+          <CustomInput
+            type="phone"
+            name="phone"
+            label="Мобильный телефон"
+            placeholder="Мобильный телефон"
+            user={formatData}
+            disabled={formatData?.isSend}
+            required={true}
+          />
+          <Divider orientation="left">Образование</Divider>
+          <Card style={{}}>
+            <Space direction="vertical">
+              <Text>
+                Если ты еще студент, обязательно укажи место учебы и уровень
+                получаемого образования: бакалавриат/специалитет/магистратура.
+              </Text>
+            </Space>
+          </Card>
+          <CustomInput
+            type="text"
+            name="studyName"
+            label="Учебное заведение"
+            placeholder="Учебное заведение"
+            user={formatData}
+            onChange={handleStudyChange}
+            required={requiredStuduFields}
+            disabled={formatData?.isSend}
+          />
+          <CustomInput
+            type="text"
+            name="studyCity"
+            label="Город"
+            placeholder="Город"
+            user={formatData}
+            onChange={handleStudyChange}
+            required={requiredStuduFields}
+            disabled={formatData?.isSend}
+          />
+          <CustomInput
+            type="text"
+            name="studyFac"
+            label="Факультет"
+            placeholder="Факультет"
+            user={formatData}
+            onChange={handleStudyChange}
+            required={requiredStuduFields}
+            disabled={formatData?.isSend}
+          />
+          <CustomInput
+            type="text"
+            name="studySpec"
+            label="Специальность"
+            placeholder="Специальность"
+            user={formatData}
+            onChange={handleStudyChange}
+            required={requiredStuduFields}
+            disabled={formatData?.isSend}
+          />
+          <Text code>
+            Если ты еще учишься, напиши предполагаемый год выпуска
+          </Text>
+          {/* <CustomInput
               type="date"
               name="studyEnd"
               label="Год окончания"
               placeholder="Год окончания"
               user={formatData}
-              // picker={"year"}
+              picker={"year"}
               onChange={handleStudyChange}
               required={requiredStuduFields}
-              disabled={formatData.isSend}
-            />
-            <CustomInput
-              type="select"
-              name="studyGrade"
-              label="Уровень образования"
-              selectOptions={studyGradeOptions}
-              placeholder="Уровень образования"
-              user={formatData}
-              onChange={handleStudyChange}
-              required={requiredStuduFields}
-              disabled={formatData.isSend}
-            />
+              disabled={formatData?.isSend}
+            /> */}
+          <CustomInput
+            type="text"
+            name="studyEnd"
+            label="Год окончания"
+            placeholder="Год окончания"
+            user={formatData}
+            onChange={handleStudyChange}
+            required={requiredStuduFields}
+            disabled={formatData?.isSend}
+          />
+          <CustomInput
+            type="select"
+            name="studyGrade"
+            label="Уровень образования"
+            selectOptions={studyGradeOptions}
+            placeholder="Уровень образования"
+            user={formatData}
+            onChange={handleStudyChange}
+            required={requiredStuduFields}
+            disabled={formatData?.isSend}
+          />
 
-            <Divider orientation="left">
-              Опыт работы (практик, стажировок)
-            </Divider>
-            <Card style={{}}>
-              <Space direction="vertical">
-                <Text>
-                  <p>
-                    {" "}
-                    Укажи последние три места работы, практики, стажировки или
-                    проектной и общественной деятельности, начиная с последнего.
-                    Если где-то у тебя существенно менялся уровень
-                    ответственности и обязанностей, отметь эту позицию отдельно.
-                  </p>
-                  <Text mark>
-                    Внимание: для участия в отборе нужно обязательно заполнить
-                    это поле.
-                  </Text>
+          <Divider orientation="left">
+            Опыт работы (практик, стажировок)
+          </Divider>
+          <Card style={{}}>
+            <Space direction="vertical">
+              <Text>
+                <p>
+                  {" "}
+                  Укажи последние три места работы, практики, стажировки или
+                  проектной и общественной деятельности, начиная с последнего.
+                  Если где-то у тебя существенно менялся уровень ответственности
+                  и обязанностей, отметь эту позицию отдельно.
+                </p>
+                <Text mark>
+                  Внимание: для участия в отборе нужно обязательно заполнить это
+                  поле.
                 </Text>
-              </Space>
-            </Card>
-            <Divider orientation="left"></Divider>
-            <Form.List name="experience">
-              {(fields, { add, remove }) => (
-                <>
-                  {fields.map(({ key, name, ...restField }) => (
+              </Text>
+            </Space>
+          </Card>
+          <Divider orientation="left"></Divider>
+          <Form.List name="experience">
+            {(fields, { add, remove }) => (
+              <>
+                {fields.map(({ key, name, ...restField }) => (
+                  <div
+                    key={key}
+                    style={{
+                      display: "flex",
+                      marginBottom: 8,
+                      flexWrap: "wrap",
+                      justifyContent: "space-between",
+                    }}
+                  >
                     <div
-                      key={key}
                       style={{
                         display: "flex",
-                        marginBottom: 8,
-                        flexWrap: "wrap",
-                        justifyContent: "space-between",
+                        justifyContent: "flex-start",
+                        gap: "20px",
                       }}
                     >
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "flex-start",
-                          gap: "20px",
-                        }}
-                      >
-                        <Form.Item
-                          {...restField}
-                          name={[name, "experienceName"]}
-                          label="Наименование организации"
-                          rules={[
-                            {
-                              required: true,
-                              message: "Напишите название организации",
-                            },
-                          ]}
-                        >
-                          <Input
-                            placeholder="Наименование организации"
-                            type="text"
-                            size="large"
-                          />
-                        </Form.Item>
-                        <Form.Item
-                          {...restField}
-                          name={[name, "experienceDate"]}
-                          label="Дата"
-                          rules={[{ required: true, message: "Укажите дату" }]}
-                        >
-                          <DatePicker
-                            size="large"
-                            format="YYYY/MM"
-                            // picker="month"
-                          />
-                        </Form.Item>
-                      </div>
-                      {!formatData?.isSend && (
-                        <MinusCircleOutlined
-                          style={{
-                            color: "#ff0f43",
-                          }}
-                          onClick={() => remove(name)}
-                        />
-                      )}
-
                       <Form.Item
                         {...restField}
-                        name={[name, "experienceText"]}
-                        label="Дополнительная информация"
-                        style={{
-                          width: "100%",
-                        }}
+                        name={[name, "experienceName"]}
+                        label="Наименование организации"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Напишите название организации",
+                          },
+                        ]}
                       >
-                        <TextArea
-                          showCount
+                        <Input
+                          placeholder="Наименование организации"
+                          type="text"
                           size="large"
-                          maxLength={100}
-                          style={{
-                            height: 60,
-                            resize: "none",
-                            flexGrow: 1,
-                            marginBottom: "20px",
-                          }}
-                          // onChange={onChange}
-                          placeholder="Дополнительная информация"
                         />
                       </Form.Item>
+                      <Form.Item
+                        {...restField}
+                        name={[name, "experienceDate"]}
+                        label="Дата"
+                        rules={[{ required: true, message: "Укажите дату" }]}
+                      >
+                        {/* <DatePicker
+                            size="large"
+                            format="YYYY/MM"
+                            picker="month"
+                          /> */}
+                        <Input placeholder="Год" type="text" size="large" />
+                      </Form.Item>
                     </div>
-                  ))}
-                  <Form.Item>
-                    <Button
-                      type="dashed"
-                      onClick={() => add()}
-                      block
-                      icon={<PlusOutlined />}
+                    {!formatData?.isSend && (
+                      <MinusCircleOutlined
+                        style={{
+                          color: "#ff0f43",
+                        }}
+                        onClick={() => remove(name)}
+                      />
+                    )}
+
+                    <Form.Item
+                      {...restField}
+                      name={[name, "experienceText"]}
+                      label="Дополнительная информация"
+                      style={{
+                        width: "100%",
+                      }}
                     >
-                      Добавить организацию
-                    </Button>
-                  </Form.Item>
-                </>
-              )}
-            </Form.List>
-            <Divider orientation="left">Дополнительная информация</Divider>
-            <CustomInput
-              type="text"
-              name="internDirection"
-              label="Направление стажировки"
-              placeholder="Направление стажировки"
-              user={formatData}
-              disabled={formatData.isSend}
-            />
-            <CustomInput
-              type="text"
-              name="internAbout"
-              label="Откуда ты узнал о стажировке?"
-              placeholder="Откуда ты узнал о стажировке?"
-              user={formatData}
-              disabled={formatData.isSend}
-            />
-            <CustomInput
-              type="text"
-              name="internSchedule"
-              label="График работы"
-              placeholder="График работы"
-              user={formatData}
-              disabled={formatData.isSend}
-            />
-            <Form.Item label="Загрузить фото" name="photo">
-              <Upload fileList={[]} {...props}>
-                <Button icon={<UploadOutlined />}>Выбрать</Button>
-              </Upload>
-            </Form.Item>
-
-            <Form.Item name="vk" label="Профиль в соцсети «ВКонтакте»">
-              <Input addonBefore="vk.com/" type="text" size="large" />
-            </Form.Item>
-            <Form.Item name="telegram" label="Профиль в Telegram">
-              <Input addonBefore="t.me/" type="text" size="large" />
-            </Form.Item>
-            <Form.Item
-              name="agreement"
-              valuePropName="checked"
-              rules={[
-                {
-                  validator: (_, value) =>
-                    value
-                      ? Promise.resolve()
-                      : Promise.reject(new Error("Обязательное условие")),
-                },
-              ]}
-              {...tailFormItemLayout}
-            >
-              <Checkbox
-                style={{
-                  width: "100%",
-                  margin: "0",
-                }}
-              >
-                Нажимая кнопку «Подать заявку», даю согласие на обработку
-                персональных данных, указанных в анкете (включая контактную
-                информацию и фотографии), в рамках проекта «Карьерный портал
-                Правительства Москвы» в соответствии с текстом{" "}
-                <a href="#">согласия</a>
-              </Checkbox>
-            </Form.Item>
-            {!formatData.isSend && (
-              <Form.Item
-                wrapperCol={{ offset: 2, span: 16 }}
-                style={{ display: "flex" }}
-              >
-                <ErrorMessage message={error} />
-                <CustomButton disabled={isFormChanged} htmlType="submit">
-                  Сохранить
-                </CustomButton>
-
-                <CustomButton
-                  disabled={!isFormChanged}
-                  type="primary"
-                  onClick={showModal}
-                >
-                  Подать заявку
-                </CustomButton>
-              </Form.Item>
+                      <TextArea
+                        showCount
+                        size="large"
+                        maxLength={100}
+                        style={{
+                          height: 60,
+                          resize: "none",
+                          flexGrow: 1,
+                          marginBottom: "20px",
+                        }}
+                        // onChange={onChange}
+                        placeholder="Дополнительная информация"
+                      />
+                    </Form.Item>
+                  </div>
+                ))}
+                <Form.Item>
+                  <Button
+                    type="dashed"
+                    onClick={() => add()}
+                    block
+                    icon={<PlusOutlined />}
+                  >
+                    Добавить организацию
+                  </Button>
+                </Form.Item>
+              </>
             )}
-          </Form>
-          <Modal
-            title="Подтвердите отправку заявки"
-            open={isModalOpen}
-            onOk={sendApply}
-            onCancel={hideModal}
-            okText="Подтвердить"
-            cancelText="Отменить"
+          </Form.List>
+          <Divider orientation="left">Дополнительная информация</Divider>
+          <CustomInput
+            type="text"
+            name="internDirection"
+            label="Направление стажировки"
+            placeholder="Направление стажировки"
+            user={formatData}
+            disabled={formatData?.isSend}
+          />
+          <CustomInput
+            type="text"
+            name="internAbout"
+            label="Откуда ты узнал о стажировке?"
+            placeholder="Откуда ты узнал о стажировке?"
+            user={formatData}
+            disabled={formatData?.isSend}
+          />
+          <CustomInput
+            type="text"
+            name="internSchedule"
+            label="График работы"
+            placeholder="График работы"
+            user={formatData}
+            disabled={formatData?.isSend}
+          />
+          <Form.Item label="Загрузить фото" name="photo">
+            <Upload fileList={[]} {...props}>
+              <Button icon={<UploadOutlined />}>Выбрать</Button>
+            </Upload>
+          </Form.Item>
+
+          <Form.Item name="vk" label="Профиль в соцсети «ВКонтакте»">
+            <Input addonBefore="vk.com/" type="text" size="large" />
+          </Form.Item>
+          <Form.Item name="telegram" label="Профиль в Telegram">
+            <Input addonBefore="t.me/" type="text" size="large" />
+          </Form.Item>
+          <Form.Item
+            name="agreement"
+            valuePropName="checked"
+            rules={[
+              {
+                validator: (_, value) =>
+                  value
+                    ? Promise.resolve()
+                    : Promise.reject(new Error("Обязательное условие")),
+              },
+            ]}
+            {...tailFormItemLayout}
           >
-            Вы действительно хотите отправить заявку?
-          </Modal>
-        </Card>
-      </Row>
-    </Layout>
+            <Checkbox
+              style={{
+                width: "100%",
+                margin: "0",
+              }}
+            >
+              Нажимая кнопку «Подать заявку», даю согласие на обработку
+              персональных данных, указанных в анкете (включая контактную
+              информацию и фотографии), в рамках проекта «Карьерный портал
+              Правительства Москвы» в соответствии с текстом{" "}
+              <a href="#">согласия</a>
+            </Checkbox>
+          </Form.Item>
+          {!formatData?.isSend && (
+            <Form.Item
+              wrapperCol={{ offset: 2, span: 16 }}
+              style={{ display: "flex" }}
+            >
+              <ErrorMessage message={error} />
+              <CustomButton disabled={isFormChanged} htmlType="submit">
+                Сохранить
+              </CustomButton>
+
+              <CustomButton
+                disabled={!isFormChanged}
+                type="primary"
+                onClick={showModal}
+              >
+                Подать заявку
+              </CustomButton>
+            </Form.Item>
+          )}
+        </Form>
+        <Modal
+          title="Подтвердите отправку заявки"
+          open={isModalOpen}
+          onOk={sendApply}
+          onCancel={hideModal}
+          okText="Подтвердить"
+          cancelText="Отменить"
+        >
+          Вы действительно хотите отправить заявку?
+        </Modal>
+      </Card>
+      {/* </Layout> */}
+    </>
   );
 };

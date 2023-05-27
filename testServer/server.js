@@ -162,7 +162,8 @@ app.get("/api/users/:id", (req, res) => {
 
 app.get("/api/users/apply/:id", (req, res) => {
   const userLogin = {
-    isSend: true,
+    isSend: false,
+    status: "processing",
     id: "candidat",
     firstName: "Иван",
     lastName: "Иванов",
