@@ -4,5 +4,7 @@ export const changeCitizenship = (role: "ru" | "notru") => {
       return "РФ";
     case "notru":
       return "Не РФ";
+    default:
+      return role;
   }
 };

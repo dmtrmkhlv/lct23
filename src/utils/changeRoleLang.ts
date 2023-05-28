@@ -1,6 +1,6 @@
 import { Role } from "../types/types";
 
-export const changeRoleLang = (role: Role) => {
+export const changeRoleLang = (role: Role | any) => {
   switch (role) {
     case "curator":
       return "Куратор";
@@ -14,5 +14,7 @@ export const changeRoleLang = (role: Role) => {
       return "Администратор";
     case "candidat":
       return "Кандидат";
+    default:
+      return role;
   }
 };

@@ -13,6 +13,7 @@ import { UserEdit } from "./components/UserEdit/UserEdit";
 import { Status } from "./components/Status/Status";
 import { UserAdd } from "./components/UserAdd/UserAdd";
 import { CandidatApplyEdit } from "./components/Candidat/CandidatApplyEdit";
+import { CandidatApplyInfo } from "./components/Candidat/CandidatApplyInfo";
 
 const { useToken } = theme;
 
@@ -33,7 +34,7 @@ const router = createBrowserRouter([
   },
   {
     path: Paths.notfound,
-    element: <NotFoundPage />,
+    element: <Status />,
   },
   {
     path: `${Paths.user}/:id`,
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
   {
     path: `${Paths.userApplyEdit}`,
     element: <CandidatApplyEdit />,
+  },
+  {
+    path: `${Paths.userApply}/:id`,
+    element: <CandidatApplyInfo />,
   },
   // {
   //   path: Paths.userApplyAdd,

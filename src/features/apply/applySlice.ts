@@ -5,10 +5,12 @@ import { UserApplyType } from "../../types/UserApplyType";
 
 interface InitialState {
   apply: UserApplyType | null;
+  allApply: UserApplyType[] | null;
 }
 
 const initialState: InitialState = {
   apply: null,
+  allApply: null,
 };
 
 const slice = createSlice({
@@ -23,6 +25,12 @@ const slice = createSlice({
       }
     );
     builder.addMatcher(
+      usersApi.endpoints.getAllUsersApply.matchFulfilled,
+      (state, action) => {
+        state.allApply = action.payload;
+      }
+    );
+    builder.addMatcher(
       usersApi.endpoints.addUserApply.matchFulfilled,
       (state, action) => {
         state.apply = action.payload;
@@ -34,3 +42,4 @@ const slice = createSlice({
 export default slice.reducer;
 
 export const selectUsersApply = (state: RootState) => state.apply.apply;
+export const selectAllUsersApply = (state: RootState) => state.apply.allApply;

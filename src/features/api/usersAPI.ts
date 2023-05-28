@@ -43,7 +43,14 @@ export const usersApi = api.injectEndpoints({
         method: "GET",
       }),
     }),
-    getAllUsersApply: builder.query<UserApplyType[], void>({
+    confirmUserApply: builder.mutation<UserApplyType[], React.Key[]>({
+      query: (userIds) => ({
+        url: `/users/apply/confirm`,
+        method: "POST",
+        body: { userIds },
+      }),
+    }),
+    getAllUsersApply: builder.query<UserApplyType[], any>({
       query: () => ({
         url: `/users-all/apply/`,
         method: "GET",
@@ -54,6 +61,12 @@ export const usersApi = api.injectEndpoints({
         url: "/users/apply/add",
         method: "POST",
         body: apply,
+      }),
+    }),
+    getApplyForUserFromHR: builder.query<UserApplyType, string>({
+      query: (id) => ({
+        url: `/users-from-hr/apply/${id}`,
+        method: "GET",
       }),
     }),
   }),
@@ -68,6 +81,8 @@ export const {
   useGetUserApplyQuery,
   useAddUserApplyMutation,
   useGetAllUsersApplyQuery,
+  useGetApplyForUserFromHRQuery,
+  useConfirmUserApplyMutation,
 } = usersApi;
 
 export const {
@@ -80,5 +95,7 @@ export const {
     getUserApply,
     addUserApply,
     getAllUsersApply,
+    getApplyForUserFromHR,
+    confirmUserApply,
   },
 } = usersApi;
