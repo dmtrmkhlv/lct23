@@ -17,7 +17,7 @@ import { CandidatApplyInfo } from "./components/Candidat/CandidatApplyInfo";
 
 const { useToken } = theme;
 
-console.log(theme);
+// console.log(theme);
 
 const router = createBrowserRouter([
   {
@@ -52,10 +52,6 @@ const router = createBrowserRouter([
     path: Paths.userAdd,
     element: <UserAdd />,
   },
-  // {
-  //   path: Paths.userApply,
-  //   element: <UserApply />,
-  // },
   {
     path: `${Paths.userApplyEdit}`,
     element: <CandidatApplyEdit />,
@@ -64,10 +60,6 @@ const router = createBrowserRouter([
     path: `${Paths.userApply}/:id`,
     element: <CandidatApplyInfo />,
   },
-  // {
-  //   path: Paths.userApplyAdd,
-  //   element: <UserApplyAdd />,
-  // },
 ]);
 
 function App() {

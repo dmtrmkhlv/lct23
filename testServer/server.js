@@ -95,10 +95,10 @@ const fakeDBStart = [
     phone: faker.phone.number(),
   },
 ];
-const fakeDB = [...fakeDBStart, ...USERS];
+let fakeDB = [...fakeDBStart, ...USERS];
 // console.log([...fakeDB, ...USERS]);
 
-const usersApply = [
+let usersApply = [
   {
     isSend: false,
     status: "processing",
@@ -813,8 +813,67 @@ app.get("/api/users/apply/:id", (req, res) => {
 });
 
 app.get("/api/users-all/apply", (req, res) => {
-  console.log(123);
   res.status(200).json(usersApply.filter((user) => user.isSend));
+});
+
+app.put("/api/users/edit/:id", (req, res) => {
+  const userId = req.params.id;
+  const userData = req.body;
+  let user = fakeDB.find((u) => u.id === userId);
+  let index = fakeDB.indexOf(user);
+
+  if (index !== -1) {
+    fakeDB.index = userData;
+    res.status(200).json(fakeDB.index);
+  } else {
+    res.status(400);
+    res.send("User not found1");
+  }
+});
+app.post("/api/users/add", (req, res) => {
+  let userData = req.body;
+  fakeDB = [...fakeDB, userData];
+
+  let user = fakeDB.find((u) => u.email === userData.email);
+  let index = fakeDB.indexOf(user);
+
+  if (index !== -1) {
+    fakeDB.index = userData;
+    res.status(200).json(fakeDB.index);
+  } else {
+    res.status(400);
+    res.send("Error");
+  }
+});
+
+app.post("/api/users/remove/:id", (req, res) => {
+  const userId = req.params.id;
+  let newUsers = fakeDB.filter((u) => u.id !== userId);
+
+  fakeDB = [...newUsers];
+
+  res.status(200).json(fakeDB);
+});
+
+app.post("/api/users/apply/add", (req, res) => {
+  const userId = req.params.id;
+  const userData = req.body;
+  let user = fakeDB.find((u) => u.id === userId);
+  let index = fakeDB.indexOf(user);
+
+  if (index !== -1) {
+    fakeDB.index = userData;
+    res.status(200).json(fakeDB.index);
+  } else {
+    fakeDB = [...fakeDB, userData];
+    res.status(200).json(userData);
+  }
+});
+
+app.post("api/users/apply/confirm", (req, res) => {
+  const userData = req.body;
+  console.log(userData);
+  res.status(200).json(userData);
 });
 
 app.get("/api/user/current", (req, res) => {

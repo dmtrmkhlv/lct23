@@ -94,15 +94,6 @@ export const UserForm = ({
         )}
         {user?.role !== "admin" && (
           <CustomInput
-            type="email"
-            name="email"
-            placeholder="Email"
-            user={user}
-            disabled={isOwner}
-          />
-        )}
-        {user?.role !== "admin" && (
-          <CustomInput
             type="text"
             name="phone"
             placeholder="Телефон"
@@ -113,7 +104,12 @@ export const UserForm = ({
 
         {isEmail && (
           <>
-            <CustomInput type="email" name="email" placeholder="Email" />
+            <CustomInput
+              required={true}
+              type="email"
+              name="email"
+              placeholder="Email"
+            />
             <PasswordInput name="password" placeholder="Пароль" />
             <PasswordInput name="confirmPassword" placeholder="Пароль" />
           </>

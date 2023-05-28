@@ -10,8 +10,13 @@ import { Link, useNavigate } from "react-router-dom";
 import style from "./index.module.css";
 import { CustomButton } from "../CustomButton/CustomButton";
 import { logout, selectUser } from "../../features/auth/authSlice";
+import { changeRoleLang } from "../../utils/changeRoleLang";
 
-export const Header = () => {
+export interface HeaderProps {
+  role?: string;
+}
+export const Header = (props: HeaderProps) => {
+  const { role } = props;
   const user = useSelector(selectUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -28,10 +33,10 @@ export const Header = () => {
         <TeamOutlined className={style.teamIcon} />
         <Link to="/">
           <CustomButton type="ghost">
-            <h1>Платформа</h1>
-            {/* <Typography.Title className={style.h1} level={1}>
-              
-            </Typography.Title> */}
+            <h1>
+              Платформа
+              {role && <span> ({changeRoleLang(role)})</span>}
+            </h1>
           </CustomButton>
         </Link>
       </Space>

@@ -58,29 +58,8 @@ export const CandidatApplyEdit = () => {
     const dateString = dbDate;
     const date = new Date(dateString);
     const year = date.getFullYear();
-    // const month =
-    //   date.getMonth() < 9 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-    // const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-    // const formattedDate = `${year}-${month}-${day}`;
     return +year;
   };
-
-  // if (data?.studyEnd) {
-  //   formatData = Object.assign({}, data, {
-  //     // studyEnd: fd(data?.studyEnd),
-  //     // studyEnd: new Date(data.studyEnd)?.toISOString().substr(0, 10),
-  //   });
-  // }
-  // if (formatData?.experience) {
-  //   const newExperience = formatData?.experience.map((el) => {
-  //     return Object.assign({}, el, {
-  //       experienceDate: dayjs(el?.experienceDate, "YYYY/MM"),
-  //     });
-  //   });
-  //   formatData = Object.assign({}, formatData, {
-  //     experience: newExperience,
-  //   });
-  // }
 
   const [form] = Form.useForm();
   const [requiredStuduFields, setRequiredStuduFields] = useState(false);
@@ -302,6 +281,7 @@ export const CandidatApplyEdit = () => {
   const sendApply = () => {
     const values = form.getFieldsValue();
     const isFormSend = { ...values, isSend: true };
+    handleEditUserApply(isFormSend);
     console.log("values", isFormSend);
   };
 
@@ -362,16 +342,7 @@ export const CandidatApplyEdit = () => {
             </Text>
           </Space>
         </Card>
-        {/* <Divider orientation="left">Действия</Divider>
-        <Space>
-          <Link to={`/apply/edit`}>
-            <CustomButton shape="round" type="default" icon={<EditOutlined />}>
-              Заполнить анкету
-            </CustomButton>
-          </Link>
-        </Space> */}
       </Card>
-      {/* <Layout> */}
       <Card title="Анкета" style={{ marginTop: "20px" }}>
         <Form
           name="userApply"
@@ -537,17 +508,6 @@ export const CandidatApplyEdit = () => {
           <Text code>
             Если ты еще учишься, напиши предполагаемый год выпуска
           </Text>
-          {/* <CustomInput
-            type="date"
-            name="studyEnd"
-            label="Год окончания"
-            placeholder="Год окончания"
-            user={data}
-            // picker={"year"}
-            onChange={handleStudyChange}
-            required={requiredStuduFields}
-            disabled={data?.isSend}
-          /> */}
           <CustomInput
             type="number"
             name="studyEnd"
@@ -640,11 +600,6 @@ export const CandidatApplyEdit = () => {
                           },
                         ]}
                       >
-                        {/* <DatePicker
-                            size="large"
-                            format="YYYY/MM"
-                            picker="month"
-                          /> */}
                         <Input placeholder="Год" type="number" size="large" />
                       </Form.Item>
                     </div>
@@ -675,7 +630,6 @@ export const CandidatApplyEdit = () => {
                           flexGrow: 1,
                           marginBottom: "20px",
                         }}
-                        // onChange={onChange}
                         placeholder="Дополнительная информация"
                       />
                     </Form.Item>
@@ -788,7 +742,6 @@ export const CandidatApplyEdit = () => {
           Вы действительно хотите отправить заявку?
         </Modal>
       </Card>
-      {/* </Layout> */}
     </>
   );
 };

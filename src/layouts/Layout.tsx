@@ -6,9 +6,10 @@ import styles from "./index.module.css";
 
 export default function Layout(props: LayoutProps): JSX.Element {
   const { children, user } = props;
+  const role = user?.role || "";
   return (
     <div className={styles.main}>
-      <Header />
+      <Header role={role} />
       <BackButton />
       <AntLayout.Content style={{ height: "100%" }}>
         {children}

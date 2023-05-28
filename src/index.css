@@ -35,3 +35,11 @@ span:hover, a:hover{
 .ant-popover {
   cursor: default !important;
 }
+
+.ant-tabs-tab-btn{
+  user-select: none;
+}
+
+.ant-spin-nested-loading.css-dev-only-do-not-override-1baz28s{
+  user-select: none;
+}
