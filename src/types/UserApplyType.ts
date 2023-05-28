@@ -3,9 +3,10 @@ import dayjs from "dayjs";
 export interface UserApplyType {
   isSend: boolean;
   id: string;
-  firstName: string;
-  lastName: string;
+  firstName: string | "";
+  lastName: string | "";
   secondName: string;
+  age: number;
   gender: "man" | "woman";
   city: string;
   cityArea:
@@ -27,7 +28,7 @@ export interface UserApplyType {
   studyCity: string;
   studyFac: string;
   studySpec: string;
-  studyEnd: string | number | Date | dayjs.Dayjs | null | undefined;
+  studyEnd: string;
   studyGrade: "mag" | "bak" | "spec";
   experience: [
     {

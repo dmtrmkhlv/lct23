@@ -33,6 +33,35 @@ export const CustomInput = ({
   switch (type) {
     case "email":
     case "text":
+    case "number":
+      if (name === "studyEnd") {
+        return (
+          <Form.Item
+            name={name}
+            label={label}
+            required={required}
+            rules={[
+              {
+                required: required,
+                message: "Обязательное поле",
+              },
+              {
+                pattern: /^\d{4}$/,
+                message: "Формат года не правильный",
+              },
+            ]}
+            shouldUpdate={true}
+          >
+            <Input
+              disabled={disabled}
+              placeholder={placeholder}
+              type={type}
+              size="large"
+              onChange={onChange}
+            />
+          </Form.Item>
+        );
+      }
       return (
         <Form.Item
           name={name}

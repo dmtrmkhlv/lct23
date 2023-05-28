@@ -43,7 +43,7 @@ const { TextArea } = Input;
 
 const { Text } = Typography;
 
-export const UserApplyEdit = () => {
+export const CandidatApplyEdit = () => {
   const navigate = useNavigate();
   const params = useParams<{ id: string }>();
   const [error, setError] = useState("");
@@ -54,21 +54,33 @@ export const UserApplyEdit = () => {
   const isOwner = userOwner?.id !== data?.id;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  let formatData = data;
-  formatData = Object.assign({}, data, {
-    studyEnd: dayjs(data?.studyEnd, "YYYY/MM"),
-  });
+  const fd = (dbDate: any) => {
+    const dateString = dbDate;
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    // const month =
+    //   date.getMonth() < 9 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+    // const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+    // const formattedDate = `${year}-${month}-${day}`;
+    return +year;
+  };
 
-  if (formatData?.experience) {
-    const newExperience = formatData?.experience.map((el) => {
-      return Object.assign({}, el, {
-        experienceDate: dayjs(el?.experienceDate, "YYYY/MM"),
-      });
-    });
-    formatData = Object.assign({}, formatData, {
-      experience: newExperience,
-    });
-  }
+  // if (data?.studyEnd) {
+  //   formatData = Object.assign({}, data, {
+  //     // studyEnd: fd(data?.studyEnd),
+  //     // studyEnd: new Date(data.studyEnd)?.toISOString().substr(0, 10),
+  //   });
+  // }
+  // if (formatData?.experience) {
+  //   const newExperience = formatData?.experience.map((el) => {
+  //     return Object.assign({}, el, {
+  //       experienceDate: dayjs(el?.experienceDate, "YYYY/MM"),
+  //     });
+  //   });
+  //   formatData = Object.assign({}, formatData, {
+  //     experience: newExperience,
+  //   });
+  // }
 
   const [form] = Form.useForm();
   const [requiredStuduFields, setRequiredStuduFields] = useState(false);
@@ -112,8 +124,8 @@ export const UserApplyEdit = () => {
   }, [form, handleStudyChange]);
 
   const handleFormChange = (changedValues: any) => {
-    const changedUser = { ...formatData, ...changedValues };
-    setIsFormChanged(objCompare(formatData, changedUser));
+    const changedUser = { ...data, ...changedValues };
+    setIsFormChanged(objCompare(data, changedUser));
   };
 
   const handleEditUserApply = async (user: UserApplyType) => {
@@ -306,10 +318,10 @@ export const UserApplyEdit = () => {
         >
           <Descriptions.Item label="Статус заявки">
             <Space direction="vertical">
-              {!formatData?.isSend && (
+              {!data?.isSend && (
                 <Badge status="default" text="заявка не отправлена" />
               )}
-              {formatData?.isSend && (
+              {data?.isSend && (
                 <Badge status="processing" text="заявка на рассмотрении" />
               )}
             </Space>
@@ -364,11 +376,11 @@ export const UserApplyEdit = () => {
         <Form
           name="userApply"
           onFinish={handleEditUserApply}
-          initialValues={formatData}
+          initialValues={data}
           onValuesChange={handleFormChange}
           layout="vertical"
           form={form}
-          disabled={formatData?.isSend}
+          disabled={data?.isSend}
         >
           <Divider orientation="left">Основная информация</Divider>
           <CustomInput
@@ -376,8 +388,8 @@ export const UserApplyEdit = () => {
             name="firstName"
             placeholder="Имя"
             label="Имя"
-            user={formatData}
-            disabled={formatData?.isSend}
+            user={data}
+            disabled={data?.isSend}
             required={true}
           />
           <CustomInput
@@ -385,8 +397,8 @@ export const UserApplyEdit = () => {
             name="lastName"
             placeholder="Фамилия"
             label="Фамилия"
-            user={formatData}
-            disabled={formatData?.isSend}
+            user={data}
+            disabled={data?.isSend}
             required={true}
           />
           <CustomInput
@@ -394,8 +406,8 @@ export const UserApplyEdit = () => {
             name="secondName"
             label="Отчество"
             placeholder="Отчество"
-            user={formatData}
-            disabled={formatData?.isSend}
+            user={data}
+            disabled={data?.isSend}
             required={true}
           />
           <CustomInput
@@ -404,18 +416,27 @@ export const UserApplyEdit = () => {
             label="Пол"
             selectOptions={genderOptions}
             placeholder="Пол"
-            user={formatData}
+            user={data}
             required={true}
-            disabled={formatData?.isSend}
+            disabled={data?.isSend}
+          />
+          <CustomInput
+            type="number"
+            name="age"
+            label="Возраст"
+            placeholder="Возраст"
+            user={data}
+            disabled={data?.isSend}
+            required={true}
           />
           <CustomInput
             type="text"
             name="city"
             label="Город проживания"
             placeholder="Город проживания"
-            user={formatData}
+            user={data}
             required={true}
-            disabled={formatData?.isSend}
+            disabled={data?.isSend}
           />
           <CustomInput
             type="select"
@@ -424,7 +445,7 @@ export const UserApplyEdit = () => {
             selectOptions={cityAreaOptions}
             placeholder="Район проживания"
             required={true}
-            disabled={formatData?.isSend}
+            disabled={data?.isSend}
           />
           <CustomInput
             type="select"
@@ -432,9 +453,9 @@ export const UserApplyEdit = () => {
             label="Гражданство"
             selectOptions={citizenshipOptions}
             placeholder="Гражданство"
-            user={formatData}
+            user={data}
             required={true}
-            disabled={formatData?.isSend}
+            disabled={data?.isSend}
           />
           <CustomInput
             type="select"
@@ -442,17 +463,17 @@ export const UserApplyEdit = () => {
             label="Образование"
             selectOptions={studyOptions}
             placeholder="Образование"
-            user={formatData}
+            user={data}
             required={true}
-            disabled={formatData?.isSend}
+            disabled={data?.isSend}
           />
           <CustomInput
             type="email"
             name="email"
             label="Email"
             placeholder="Email"
-            user={formatData}
-            disabled={formatData?.isSend}
+            user={data}
+            disabled={data?.isSend}
             required={true}
           />
           <CustomInput
@@ -460,8 +481,8 @@ export const UserApplyEdit = () => {
             name="phone"
             label="Мобильный телефон"
             placeholder="Мобильный телефон"
-            user={formatData}
-            disabled={formatData?.isSend}
+            user={data}
+            disabled={data?.isSend}
             required={true}
           />
           <Divider orientation="left">Образование</Divider>
@@ -478,64 +499,64 @@ export const UserApplyEdit = () => {
             name="studyName"
             label="Учебное заведение"
             placeholder="Учебное заведение"
-            user={formatData}
+            user={data}
             onChange={handleStudyChange}
             required={requiredStuduFields}
-            disabled={formatData?.isSend}
+            disabled={data?.isSend}
           />
           <CustomInput
             type="text"
             name="studyCity"
             label="Город"
             placeholder="Город"
-            user={formatData}
+            user={data}
             onChange={handleStudyChange}
             required={requiredStuduFields}
-            disabled={formatData?.isSend}
+            disabled={data?.isSend}
           />
           <CustomInput
             type="text"
             name="studyFac"
             label="Факультет"
             placeholder="Факультет"
-            user={formatData}
+            user={data}
             onChange={handleStudyChange}
             required={requiredStuduFields}
-            disabled={formatData?.isSend}
+            disabled={data?.isSend}
           />
           <CustomInput
             type="text"
             name="studySpec"
             label="Специальность"
             placeholder="Специальность"
-            user={formatData}
+            user={data}
             onChange={handleStudyChange}
             required={requiredStuduFields}
-            disabled={formatData?.isSend}
+            disabled={data?.isSend}
           />
           <Text code>
             Если ты еще учишься, напиши предполагаемый год выпуска
           </Text>
           {/* <CustomInput
-              type="date"
-              name="studyEnd"
-              label="Год окончания"
-              placeholder="Год окончания"
-              user={formatData}
-              picker={"year"}
-              onChange={handleStudyChange}
-              required={requiredStuduFields}
-              disabled={formatData?.isSend}
-            /> */}
-          <CustomInput
-            type="text"
+            type="date"
             name="studyEnd"
             label="Год окончания"
             placeholder="Год окончания"
-            user={formatData}
+            user={data}
+            // picker={"year"}
             onChange={handleStudyChange}
             required={requiredStuduFields}
-            disabled={formatData?.isSend}
+            disabled={data?.isSend}
+          /> */}
+          <CustomInput
+            type="number"
+            name="studyEnd"
+            label="Год окончания"
+            placeholder="Год окончания"
+            user={data}
+            onChange={handleStudyChange}
+            required={requiredStuduFields}
+            disabled={data?.isSend}
           />
           <CustomInput
             type="select"
@@ -543,10 +564,10 @@ export const UserApplyEdit = () => {
             label="Уровень образования"
             selectOptions={studyGradeOptions}
             placeholder="Уровень образования"
-            user={formatData}
+            user={data}
             onChange={handleStudyChange}
             required={requiredStuduFields}
-            disabled={formatData?.isSend}
+            disabled={data?.isSend}
           />
 
           <Divider orientation="left">
@@ -611,17 +632,23 @@ export const UserApplyEdit = () => {
                         {...restField}
                         name={[name, "experienceDate"]}
                         label="Дата"
-                        rules={[{ required: true, message: "Укажите дату" }]}
+                        rules={[
+                          { required: true, message: "Укажите дату" },
+                          {
+                            pattern: /^\d{4}$/,
+                            message: "Формат года не правильный",
+                          },
+                        ]}
                       >
                         {/* <DatePicker
                             size="large"
                             format="YYYY/MM"
                             picker="month"
                           /> */}
-                        <Input placeholder="Год" type="text" size="large" />
+                        <Input placeholder="Год" type="number" size="large" />
                       </Form.Item>
                     </div>
-                    {!formatData?.isSend && (
+                    {!data?.isSend && (
                       <MinusCircleOutlined
                         style={{
                           color: "#ff0f43",
@@ -673,24 +700,24 @@ export const UserApplyEdit = () => {
             name="internDirection"
             label="Направление стажировки"
             placeholder="Направление стажировки"
-            user={formatData}
-            disabled={formatData?.isSend}
+            user={data}
+            disabled={data?.isSend}
           />
           <CustomInput
             type="text"
             name="internAbout"
             label="Откуда ты узнал о стажировке?"
             placeholder="Откуда ты узнал о стажировке?"
-            user={formatData}
-            disabled={formatData?.isSend}
+            user={data}
+            disabled={data?.isSend}
           />
           <CustomInput
             type="text"
             name="internSchedule"
             label="График работы"
             placeholder="График работы"
-            user={formatData}
-            disabled={formatData?.isSend}
+            user={data}
+            disabled={data?.isSend}
           />
           <Form.Item label="Загрузить фото" name="photo">
             <Upload fileList={[]} {...props}>
@@ -730,7 +757,7 @@ export const UserApplyEdit = () => {
               <a href="#">согласия</a>
             </Checkbox>
           </Form.Item>
-          {!formatData?.isSend && (
+          {!data?.isSend && (
             <Form.Item
               wrapperCol={{ offset: 2, span: 16 }}
               style={{ display: "flex" }}

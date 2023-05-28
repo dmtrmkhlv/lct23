@@ -3,8 +3,8 @@ import { Profile } from "../Profile/Profile";
 import { Apply } from "../Apply/Apply";
 import { ExternalLink } from "../ExternalLink/ExternalLink";
 import { Testing } from "../Testing/Testing";
-import { CareerSchool } from "../CareerSchool/CareerSchool";
-import { UserApplyEdit } from "../UserApplyEdit/UserApplyEdit";
+import { CareerSchool } from "./CareerSchool";
+import { CandidatApplyEdit } from "./CandidatApplyEdit";
 
 const Candidat: React.FC = () => {
   // const operations = <Button>Карьерная школа</Button>;
@@ -24,7 +24,7 @@ const Candidat: React.FC = () => {
           {
             label: "Заявка",
             key: "Заявка",
-            children: <UserApplyEdit />,
+            children: <CandidatApplyEdit />,
           },
           {
             label: "Тестирование",

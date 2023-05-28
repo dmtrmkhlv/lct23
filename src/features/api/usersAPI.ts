@@ -43,6 +43,12 @@ export const usersApi = api.injectEndpoints({
         method: "GET",
       }),
     }),
+    getAllUsersApply: builder.query<UserApplyType[], void>({
+      query: () => ({
+        url: `/users-all/apply/`,
+        method: "GET",
+      }),
+    }),
     addUserApply: builder.mutation<UserApplyType, UserApplyType>({
       query: (apply) => ({
         url: "/users/apply/add",
@@ -61,6 +67,7 @@ export const {
   useRemoveUserMutation,
   useGetUserApplyQuery,
   useAddUserApplyMutation,
+  useGetAllUsersApplyQuery,
 } = usersApi;
 
 export const {
@@ -72,5 +79,6 @@ export const {
     addUser,
     getUserApply,
     addUserApply,
+    getAllUsersApply,
   },
 } = usersApi;
