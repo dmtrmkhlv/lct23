@@ -9,7 +9,7 @@ import { Paths } from "../../utils/paths";
 import { UserAuth } from "../../types/types";
 import { isErrorWithMessage } from "../../utils/is-error-with-message";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
-import { useRegisterMutation } from "../../features/api/auth";
+import { useRegisterMutation } from "../../features/api/authAPI";
 import { selectUser } from "../../features/auth/authSlice";
 
 export const Register = () => {
@@ -41,7 +41,7 @@ export const Register = () => {
   };
 
   return (
-    <Layout>
+    <Layout style={{ background: "#ffffff" }}>
       <Row align="middle" justify="center">
         <Card title="Зарегистрируйтесь" style={{ width: "30rem" }}>
           <Form onFinish={register}>

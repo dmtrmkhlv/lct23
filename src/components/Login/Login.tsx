@@ -9,7 +9,7 @@ import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
 import { Paths } from "../../utils/paths";
 import { CustomButton } from "../CustomButton/CustomButton";
 import { UserAuth } from "../../types/types";
-import { useLoginMutation } from "../../features/api/auth";
+import { useLoginMutation } from "../../features/api/authAPI";
 import { selectUser } from "../../features/auth/authSlice";
 
 export const Login = () => {
@@ -41,7 +41,7 @@ export const Login = () => {
   };
 
   return (
-    <Layout>
+    <Layout style={{ background: "#ffffff" }}>
       <Row align="middle" justify="center">
         <Card title="Войдите" style={{ width: "30rem" }}>
           <Form onFinish={login}>

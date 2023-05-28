@@ -1,11 +1,12 @@
-import { useCurrentQuery } from "../../features/api/auth";
+import { useCurrentQuery } from "../../features/api/authAPI";
+import Load from "../Load/Load";
 
 export const Auth = ({ children }: { children: JSX.Element }) => {
   const { isLoading } = useCurrentQuery();
-  // const isLoading = false;
+  // const isLoading = true;
 
   if (isLoading) {
-    return <span>Загрузка</span>;
+    return <Load />;
   }
 
   return children;
