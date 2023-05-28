@@ -858,22 +858,29 @@ app.post("/api/users/remove/:id", (req, res) => {
 app.post("/api/users/apply/add", (req, res) => {
   const userId = req.params.id;
   const userData = req.body;
-  let user = fakeDB.find((u) => u.id === userId);
-  let index = fakeDB.indexOf(user);
+  let user = usersApply.find((u) => u.id === userId);
+  let index = usersApply.indexOf(user);
 
   if (index !== -1) {
     fakeDB.index = userData;
-    res.status(200).json(fakeDB.index);
+    res.status(200).json(usersApply.index);
   } else {
     fakeDB = [...fakeDB, userData];
     res.status(200).json(userData);
   }
 });
 
-app.post("api/users/apply/confirm", (req, res) => {
+app.post("/api/users/apply/confirm", (req, res) => {
   const userData = req.body;
-  console.log(userData);
-  res.status(200).json(userData);
+  userData.userIds.forEach((id) => {
+    let user = fakeDB.find((u) => u.id === id);
+    let index = fakeDB.indexOf(user);
+    if (index !== -1) {
+      fakeDB.index.role = "intern";
+    }
+    console.log(fakeDB.index);
+    res.status(200).json(fakeDB.index);
+  });
 });
 
 app.get("/api/user/current", (req, res) => {
