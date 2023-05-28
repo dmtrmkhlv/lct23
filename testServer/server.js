@@ -755,6 +755,58 @@ const authenticateJWT = (req, res, next) => {
   }
 };
 
+app.post("/api/user/register", (req, res) => {
+  const { email, password } = req.body;
+
+  const userExist = fakeDB.find((user) => {
+    return user.email === email;
+  });
+
+  if (userExist) {
+    res.status(400);
+    res.send("Пользователь с таким Email зарегистрирован");
+  } else {
+    let newUser = {
+      id: nanoid(),
+      email: email,
+      password: password,
+      role: "candidat",
+      firstName: "",
+      lastName: "",
+      username: "",
+      phone: "",
+    };
+    fakeDB = [...fakeDB, newUser];
+
+    const userLogin = fakeDB.find((user) => {
+      return user.email === email && user.password === password;
+    });
+
+    if (userLogin) {
+      const accessToken = jwt.sign(
+        { email: userLogin.email, role: userLogin.role },
+        accessTokenSecret,
+        { expiresIn: "10h" }
+      );
+
+      const refreshToken = jwt.sign(
+        { email: userLogin.email, role: userLogin.role },
+        refreshTokenSecret
+      );
+
+      refreshTokens.push(refreshToken);
+
+      userLogin.token = accessToken;
+      userLogin.refreshToken = refreshToken;
+
+      res.status(200).json(userLogin);
+    } else {
+      res.status(400);
+      res.send("User not found");
+    }
+  }
+});
+
 app.post("/api/user/login", (req, res) => {
   const { email, password } = req.body;
 
