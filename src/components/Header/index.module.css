@@ -6,6 +6,7 @@
     justify-content: space-between;
     background: #00443d;
     color: #ffffff;
+    /* user-select: none; */
   }
 
   h1{
@@ -19,4 +20,10 @@
 
   .button{
     color: #ffffff;
+  }
+
+  .img{
+    height: 20px;
+    margin-left: 10px;
+    transform: translateY(5px);
   }

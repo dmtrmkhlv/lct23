@@ -11,6 +11,7 @@ import style from "./index.module.css";
 import { CustomButton } from "../CustomButton/CustomButton";
 import { logout, selectUser } from "../../features/auth/authSlice";
 import { changeRoleLang } from "../../utils/changeRoleLang";
+import ltclogo from "../../assets/ltclogo.png";
 
 export interface HeaderProps {
   role?: string;
@@ -30,7 +31,10 @@ export const Header = (props: HeaderProps) => {
   return (
     <Layout.Header className={style.header}>
       <Space>
-        <TeamOutlined className={style.teamIcon} />
+        <Link to="/">
+          <img src={ltclogo} className={style.img} alt="ltclogo" />
+        </Link>
+        {/* <TeamOutlined className={style.teamIcon} /> */}
         <Link to="/">
           <CustomButton type="ghost">
             <h1>
