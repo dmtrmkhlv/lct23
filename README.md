@@ -11,5 +11,21 @@
 
 ### `npm start`
 
-# Запуск сервера
+## Запуск сервера
 ### `cd testServer npm start`
+
+# Тестирование разными пользователями
+
+Кандидат  | candidat@mail.ru
+
+Куратор  | curator@mail.ru
+
+Администратор  | admin@mail.ru
+
+Стажер  | intern@mail.ru
+
+Наставник  | mentor@mail.ru
+
+Кадры  | hr@mail.ru
+
+Пароль: 123123
