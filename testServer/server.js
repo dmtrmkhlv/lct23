@@ -763,8 +763,9 @@ app.post("/api/user/register", (req, res) => {
   });
 
   if (userExist) {
-    res.status(400);
-    res.send("Пользователь с таким Email зарегистрирован");
+    res
+      .status(400)
+      .json({ message: "Пользователь, с таким email уже существует" });
   } else {
     let newUser = {
       id: nanoid(),
