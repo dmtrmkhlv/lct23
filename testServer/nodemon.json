@@ -1,0 +1,7 @@
+{
+    "verbose": false,
+    "watch": ["./"],
+    "exec": "node server.js",
+    "legacyWatch": true,
+    "pollingInterval": 4000
+}

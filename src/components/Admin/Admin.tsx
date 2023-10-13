@@ -6,22 +6,17 @@ import type { FilterConfirmProps } from "antd/es/table/interface";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import React, { useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
-import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useGetAllUsersQuery } from "../../features/api/usersAPI";
-import { selectUser } from "../../features/auth/authSlice";
-import { Role, UserType } from "../../types/types";
+import { UserType } from "../../types/types";
 import { Paths } from "../../utils/paths";
 import { changeRoleLang } from "../../utils/changeRoleLang";
 import { CustomButton } from "../CustomButton/CustomButton";
-import { UserForm } from "../UserForm/UserForm";
 import { UserAdd } from "../UserAdd/UserAdd";
 
 type DataIndex = keyof UserType;
 
 const Admin: React.FC = () => {
-  const navigate = useNavigate();
-  const user = useSelector(selectUser);
   const { data, isLoading } = useGetAllUsersQuery();
 
   const [searchText, setSearchText] = useState("");

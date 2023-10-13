@@ -25,7 +25,7 @@ type DataIndex = keyof UserApplyType;
 export default function CuratorApply() {
   const [idToConfirm, setIdToConfirm] = useState<React.Key[]>([]);
   const { data, isLoading } = useGetAllUsersApplyQuery(idToConfirm);
-  const [confirmUserApply, {}] = useConfirmUserApplyMutation();
+  const [confirmUserApply] = useConfirmUserApplyMutation();
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);

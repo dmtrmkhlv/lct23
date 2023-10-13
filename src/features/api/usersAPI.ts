@@ -2,6 +2,8 @@ import { UserApplyType } from "../../types/UserApplyType";
 import { UserType } from "../../types/types";
 import { api } from "./api";
 
+const rootUrl = window.location.origin;
+
 export const usersApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getAllUsers: builder.query<UserType[], void>({
@@ -12,20 +14,20 @@ export const usersApi = api.injectEndpoints({
     }),
     getUser: builder.query<UserType, string>({
       query: (id) => ({
-        url: `/users/${id}`,
+        url: rootUrl + `/api/users/${id}`,
         method: "GET",
       }),
     }),
     editUser: builder.mutation<string, UserType>({
       query: (user) => ({
-        url: `/users/edit/${user.id}`,
+        url: rootUrl + `/api/users/edit/${user.id}`,
         method: "PUT",
         body: user,
       }),
     }),
     removeUser: builder.mutation<string, string>({
       query: (id) => ({
-        url: `/users/remove/${id}`,
+        url: rootUrl + `/api/users/remove/${id}`,
         method: "POST",
         body: { id },
       }),

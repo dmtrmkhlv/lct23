@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { Card, Descriptions, Divider, Modal, Space } from "antd";
+import { Card, Descriptions, Divider, Space } from "antd";
 import { useGetUserQuery } from "../../features/api/usersAPI";
 import { selectUser } from "../../features/auth/authSlice";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
@@ -12,7 +12,7 @@ import { ExternalLink } from "../ExternalLink/ExternalLink";
 const { Text } = Typography;
 
 export const Testing = () => {
-  const [error, setError] = useState("");
+  const [error] = useState("");
   const user = useSelector(selectUser);
   const { data, isLoading } = useGetUserQuery(user?.id || "");
 

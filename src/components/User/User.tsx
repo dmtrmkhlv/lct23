@@ -15,7 +15,6 @@ import { CustomButton } from "../CustomButton/CustomButton";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
 import { changeRoleLang } from "../../utils/changeRoleLang";
 import Load from "../Load/Load";
-import { UserType } from "../../types/types";
 
 export const User = () => {
   const navigate = useNavigate();

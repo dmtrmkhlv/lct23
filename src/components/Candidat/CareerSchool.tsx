@@ -1,10 +1,8 @@
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { Card, Descriptions, Divider, Modal, Space } from "antd";
+import { Card, Descriptions, Divider, Space } from "antd";
 import { useGetUserQuery } from "../../features/api/usersAPI";
 import { selectUser } from "../../features/auth/authSlice";
-import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
 import Load from "../Load/Load";
 import { Typography } from "antd";
 import { ExternalLink } from "../ExternalLink/ExternalLink";

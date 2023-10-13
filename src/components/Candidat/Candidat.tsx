@@ -1,7 +1,4 @@
 import { Tabs } from "antd";
-import { Profile } from "../Profile/Profile";
-import { Apply } from "../Apply/Apply";
-import { ExternalLink } from "../ExternalLink/ExternalLink";
 import { Testing } from "../Testing/Testing";
 import { CareerSchool } from "./CareerSchool";
 import { CandidatApplyEdit } from "./CandidatApplyEdit";

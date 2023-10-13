@@ -1,17 +1,15 @@
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Badge,
   Button,
   Card,
   Checkbox,
-  DatePicker,
   Descriptions,
   Divider,
   Form,
   Input,
   Modal,
-  Row,
   Space,
   Upload,
   UploadProps,
@@ -27,7 +25,6 @@ import {
   useAddUserApplyMutation,
 } from "../../features/api/usersAPI";
 import { selectUser } from "../../features/auth/authSlice";
-import Layout from "../../layouts/Layout";
 import { isErrorWithMessage } from "../../utils/is-error-with-message";
 import { objCompare } from "../../utils/objCompare";
 import { Paths } from "../../utils/paths";
@@ -37,7 +34,6 @@ import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
 import { CustomButton } from "../CustomButton/CustomButton";
 import { Typography } from "antd";
 import { UserApplyType } from "../../types/UserApplyType";
-import dayjs from "dayjs";
 
 const { TextArea } = Input;
 
@@ -45,21 +41,12 @@ const { Text } = Typography;
 
 export const CandidatApplyEdit = () => {
   const navigate = useNavigate();
-  const params = useParams<{ id: string }>();
   const [error, setError] = useState("");
   const userOwner = useSelector(selectUser);
   const { data, isLoading } = useGetUserApplyQuery(userOwner?.id || "");
   const [addUserApply] = useAddUserApplyMutation();
   const [isFormChanged, setIsFormChanged] = useState(true);
-  const isOwner = userOwner?.id !== data?.id;
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const fd = (dbDate: any) => {
-    const dateString = dbDate;
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    return +year;
-  };
 
   const [form] = Form.useForm();
   const [requiredStuduFields, setRequiredStuduFields] = useState(false);
@@ -155,16 +142,6 @@ export const CandidatApplyEdit = () => {
     },
   ];
 
-  const experienceOptions = [
-    {
-      value: "yes",
-      label: "Да",
-    },
-    {
-      value: "no",
-      label: "Нет",
-    },
-  ];
   const genderOptions = [
     {
       value: "man",
@@ -708,7 +685,7 @@ export const CandidatApplyEdit = () => {
               персональных данных, указанных в анкете (включая контактную
               информацию и фотографии), в рамках проекта «Карьерный портал
               Правительства Москвы» в соответствии с текстом{" "}
-              <a href="#">согласия</a>
+              <a href="./">согласия</a>
             </Checkbox>
           </Form.Item>
           {!data?.isSend && (

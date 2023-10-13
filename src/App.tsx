@@ -7,17 +7,12 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Main from "./components/Main/Main";
 import { ConfigProvider, theme } from "antd";
 import ru_RU from "antd/locale/ru_RU";
-import { NotFoundPage } from "./pages/NotFoundPage";
 import { User } from "./components/User/User";
 import { UserEdit } from "./components/UserEdit/UserEdit";
 import { Status } from "./components/Status/Status";
 import { UserAdd } from "./components/UserAdd/UserAdd";
 import { CandidatApplyEdit } from "./components/Candidat/CandidatApplyEdit";
 import { CandidatApplyInfo } from "./components/Candidat/CandidatApplyInfo";
-
-const { useToken } = theme;
-
-// console.log(theme);
 
 const router = createBrowserRouter([
   {

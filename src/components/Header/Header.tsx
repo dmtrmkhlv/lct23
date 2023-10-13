@@ -1,10 +1,5 @@
-import {
-  TeamOutlined,
-  LoginOutlined,
-  LogoutOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-import { Button, Layout, Space, Typography } from "antd";
+import { LoginOutlined, LogoutOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Layout, Space } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import style from "./index.module.css";
